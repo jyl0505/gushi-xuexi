@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学古诗75首 · 诗词学堂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#2c1810;--paper:#faf6f0;--accent:#c0392b;--accent2:#8b4513;
+  --jade:#2d6a4f;--gold:#b8860b;--mist:#d4c5a9;--cloud:#f5f0e8;
+  --shadow:0 4px 24px rgba(44,24,16,.12);
+  --font-title:'Ma Shan Zheng',cursive;
+  --font-body:'Noto Serif SC','ZCOOL XiaoWei',serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* === HEADER === */
+.site-header{
+  background:linear-gradient(135deg,#1a0f0a 0%,#2c1810 50%,#3d2317 100%);
+  color:var(--paper);padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden
+}
+.site-header::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity:.5
+}
+.site-header h1{font-family:var(--font-title);font-size:2.8rem;letter-spacing:.15em;position:relative}
+.site-header .subtitle{font-size:1rem;opacity:.7;margin-top:.5rem;letter-spacing:.3em;position:relative}
+
+/* === NAV TABS === */
+.nav-bar{
+  display:flex;justify-content:center;gap:.5rem;padding:1rem;background:var(--cloud);
+  border-bottom:1px solid var(--mist);position:sticky;top:0;z-index:100;
+  flex-wrap:wrap
+}
+.nav-btn{
+  padding:.5rem 1.2rem;border:1px solid var(--mist);background:transparent;
+  border-radius:2rem;cursor:pointer;font-family:var(--font-body);font-size:.9rem;
+  color:var(--ink);transition:all .3s
+}
+.nav-btn:hover,.nav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* === SEARCH === */
+.search-wrap{
+  max-width:500px;margin:1.5rem auto;padding:0 1rem
+}
+.search-input{
+  width:100%;padding:.8rem 1.2rem .8rem 3rem;border:2px solid var(--mist);
+  border-radius:2rem;font-size:1rem;font-family:var(--font-body);
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") 1rem center no-repeat;
+  transition:border-color .3s;outline:none
+}
+.search-input:focus{border-color:var(--accent)}
+
+/* === STATS BAR === */
+.stats-bar{
+  display:flex;justify-content:center;gap:2rem;padding:.8rem 1rem;
+  font-size:.85rem;color:var(--accent2);flex-wrap:wrap
+}
+.stats-bar span{display:flex;align-items:center;gap:.3rem}
+
+/* === POEM GRID === */
+.poem-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.2rem;padding:1.5rem;max-width:1200px;margin:0 auto
+}
+.poem-card{
+  background:#fff;border-radius:1rem;overflow:hidden;cursor:pointer;
+  box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s;
+  position:relative;border:1px solid rgba(0,0,0,.05)
+}
+.poem-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(44,24,16,.18)}
+.poem-card .card-art{
+  height:140px;position:relative;overflow:hidden
+}
+.poem-card .card-art canvas{width:100%;height:100%}
+.poem-card .card-body{padding:1rem 1.2rem}
+.poem-card .card-title{
+  font-family:var(--font-title);font-size:1.4rem;color:var(--ink);
+  margin-bottom:.3rem
+}
+.poem-card .card-meta{font-size:.8rem;color:#888;margin-bottom:.6rem}
+.poem-card .card-preview{
+  font-size:.85rem;color:#666;line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+.poem-card .dynasty-tag{
+  position:absolute;top:.6rem;right:.6rem;
+  background:rgba(192,57,43,.85);color:#fff;
+  padding:.2rem .6rem;border-radius:1rem;font-size:.7rem;backdrop-filter:blur(4px)
+}
+.poem-card .difficulty-dots{
+  position:absolute;top:.6rem;left:.6rem;display:flex;gap:2px
+}
+.poem-card .difficulty-dots i{
+  width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.6)
+}
+.poem-card .difficulty-dots i.filled{background:#ffd700}
+
+/* === DETAIL VIEW === */
+.detail-view{
+  display:none;max-width:800px;margin:0 auto;padding:2rem 1.5rem 4rem
+}
+.detail-view.active{display:block}
+.hidden{display:none!important}
+
+.back-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.5rem 1rem;border:none;background:var(--cloud);
+  border-radius:2rem;cursor:pointer;font-family:var(--font-body);
+  font-size:.9rem;color:var(--ink);margin-bottom:1.5rem;transition:background .3s
+}
+.back-btn:hover{background:var(--mist)}
+
+.detail-header{text-align:center;margin-bottom:2rem}
+.detail-header .dynasty-badge{
+  display:inline-block;padding:.2rem .8rem;border-radius:1rem;
+  font-size:.8rem;color:var(--accent);border:1px solid var(--accent);
+  margin-bottom:.5rem
+}
+.detail-header h2{
+  font-family:var(--font-title);font-size:2.4rem;letter-spacing:.1em;margin:.5rem 0
+}
+.detail-header .author{font-size:1rem;color:var(--accent2)}
+
+/* Scene illustration */
+.scene-container{
+  width:100%;height:300px;border-radius:1rem;overflow:hidden;
+  margin-bottom:2rem;position:relative;background:var(--cloud)
+}
+.scene-container canvas{width:100%;height:100%}
+
+/* Pinyin + poem text */
+.poem-text-box{
+  background:#fff;border-radius:1rem;padding:2rem;box-shadow:var(--shadow);
+  margin-bottom:2rem;text-align:center;position:relative
+}
+.poem-line{margin-bottom:1.2rem}
+.poem-line .pinyin{
+  font-size:.75rem;color:#999;letter-spacing:.3em;margin-bottom:.2rem;
+  min-height:1.2rem;line-height:1.2
+}
+.poem-line .chinese{
+  font-family:var(--font-title);font-size:1.8rem;line-height:1.8;
+  color:var(--ink);letter-spacing:.2em;cursor:pointer;
+  transition:color .2s;padding:.2rem .4rem;border-radius:.3rem
+}
+.poem-line .chinese:hover{color:var(--accent);background:rgba(192,57,43,.05)}
+.poem-line .chinese.highlight{color:var(--accent);text-shadow:0 0 8px rgba(192,57,43,.3);background:rgba(192,57,43,.08)}
+
+/* Share button */
+.share-btn{
+  position:absolute;top:1rem;right:1rem;
+  padding:.4rem .8rem;border:1px solid var(--mist);background:rgba(255,255,255,.9);
+  border-radius:1rem;cursor:pointer;font-size:.8rem;color:var(--accent2);
+  backdrop-filter:blur(4px);transition:all .3s;z-index:10
+}
+.share-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Next/Prev poem nav */
+.poem-nav{
+  display:flex;justify-content:space-between;margin-top:2rem;padding-top:1.5rem;
+  border-top:1px solid var(--mist)
+}
+.poem-nav-btn{
+  display:flex;align-items:center;gap:.3rem;
+  padding:.5rem 1rem;border:1px solid var(--mist);background:#fff;
+  border-radius:.5rem;cursor:pointer;font-family:var(--font-body);
+  font-size:.85rem;color:var(--ink);transition:all .3s;text-decoration:none
+}
+.poem-nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.poem-nav-btn.disabled{opacity:.3;pointer-events:none}
+
+/* Audio controls */
+.audio-controls{
+  display:flex;justify-content:center;gap:1rem;margin:1.5rem 0;
+  flex-wrap:wrap
+}
+.audio-btn{
+  display:flex;align-items:center;gap:.4rem;
+  padding:.6rem 1.2rem;border:2px solid var(--mist);background:#fff;
+  border-radius:2rem;cursor:pointer;font-family:var(--font-body);
+  font-size:.9rem;color:var(--ink);transition:all .3s
+}
+.audio-btn:hover{border-color:var(--accent);color:var(--accent)}
+.audio-btn.playing{background:var(--accent);color:#fff;border-color:var(--accent)}
+.audio-btn svg{width:18px;height:18px;fill:currentColor}
+
+/* Explanation */
+.explanation{
+  background:#fff;border-radius:1rem;padding:1.5rem 2rem;
+  box-shadow:var(--shadow);margin-bottom:1.5rem
+}
+.explanation h3{
+  font-family:var(--font-title);font-size:1.3rem;color:var(--accent2);
+  margin-bottom:1rem;display:flex;align-items:center;gap:.5rem
+}
+.explanation .line-exp{
+  padding:.8rem 0;border-bottom:1px dashed var(--mist)
+}
+.explanation .line-exp:last-child{border-bottom:none}
+.explanation .line-exp .orig{
+  font-family:var(--font-title);font-size:1.1rem;color:var(--ink);
+  margin-bottom:.3rem
+}
+.explanation .line-exp .trans{
+  font-size:.9rem;color:#666;line-height:1.6
+}
+.explanation .summary{
+  font-size:.95rem;line-height:1.8;color:#555;
+  padding:1rem;background:var(--cloud);border-radius:.5rem;margin-top:1rem
+}
+
+/* Author info */
+.author-info{
+  background:#fff;border-radius:1rem;padding:1.5rem 2rem;
+  box-shadow:var(--shadow);margin-bottom:1.5rem
+}
+.author-info h3{
+  font-family:var(--font-title);font-size:1.3rem;color:var(--jade);
+  margin-bottom:.8rem
+}
+.author-info p{font-size:.9rem;line-height:1.8;color:#555}
+
+/* Study mode */
+.study-section{
+  background:linear-gradient(135deg,var(--jade),#1b4332);
+  border-radius:1rem;padding:2rem;color:#fff;margin-top:2rem
+}
+.study-section h3{
+  font-family:var(--font-title);font-size:1.5rem;margin-bottom:1rem;text-align:center
+}
+.study-options{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.study-opt{
+  padding:.6rem 1.5rem;border:2px solid rgba(255,255,255,.3);
+  background:transparent;border-radius:2rem;color:#fff;cursor:pointer;
+  font-family:var(--font-body);font-size:.9rem;transition:all .3s
+}
+.study-opt:hover{background:rgba(255,255,255,.15);border-color:#fff}
+.study-opt.active{background:#fff;color:var(--jade)}
+
+/* Fill-in-blank */
+.fill-blank-area{
+  margin-top:1.5rem;text-align:center
+}
+.fill-blank-area .blank-line{
+  font-family:var(--font-title);font-size:1.5rem;line-height:2.2;
+  letter-spacing:.1em
+}
+.fill-blank-area .blank-word{
+  display:inline-block;min-width:2em;border-bottom:2px solid rgba(255,255,255,.5);
+  margin:0 .2rem;color:transparent;transition:all .3s;cursor:pointer
+}
+.fill-blank-area .blank-word.revealed{color:#ffd700}
+.fill-blank-area .blank-word input{
+  width:2em;border:none;background:transparent;border-bottom:2px solid rgba(255,255,255,.5);
+  font-family:var(--font-title);font-size:1.5rem;color:#fff;text-align:center;outline:none
+}
+.fill-blank-area .score{
+  margin-top:1rem;font-size:1.1rem;color:#ffd700
+}
+
+/* Responsive */
+@media(max-width:640px){
+  .site-header h1{font-size:2rem}
+  .poem-grid{grid-template-columns:1fr;padding:1rem}
+  .poem-line .chinese{font-size:1.4rem}
+  .detail-header h2{font-size:1.8rem}
+  .scene-container{height:200px}
+}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.poem-card{animation:fadeIn .4s ease both}
+.poem-card:nth-child(2){animation-delay:.05s}
+.poem-card:nth-child(3){animation-delay:.1s}
+.poem-card:nth-child(4){animation-delay:.15s}
+.poem-card:nth-child(5){animation-delay:.2s}
+.poem-card:nth-child(6){animation-delay:.25s}
+
+/* Scroll to top */
+.scroll-top{
+  position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;
+  border-radius:50%;background:var(--accent);color:#fff;border:none;
+  cursor:pointer;display:none;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(192,57,43,.3);font-size:1.2rem;z-index:99
+}
+.scroll-top.visible{display:flex}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>诗词学堂</h1>
+  <div class="subtitle">小学1-6年级必备古诗75首</div>
+</header>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" data-filter="all">全部</button>
+  <button class="nav-btn" data-filter="汉代">汉代</button>
+  <button class="nav-btn" data-filter="北朝">北朝</button>
+  <button class="nav-btn" data-filter="唐代">唐代</button>
+  <button class="nav-btn" data-filter="宋代">宋代</button>
+  <button class="nav-btn" data-filter="元代">元代</button>
+  <button class="nav-btn" data-filter="明代">明代</button>
+  <button class="nav-btn" data-filter="清代">清代</button>
+</nav>
+
+<div class="search-wrap">
+  <input type="text" class="search-input" placeholder="搜索诗名、作者或内容…" id="searchInput">
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="poem-grid" id="poemGrid"></div>
+
+<div class="detail-view" id="detailView"></div>
+
+<button class="scroll-top" id="scrollTop">↑</button>
+
+<script>
+const POEMS = [
+  {
+    "id": 0,
+    "title": "江南",
+    "author": "汉乐府",
+    "content": "江南可采莲，莲叶何田田。鱼戏莲叶间。鱼戏莲叶东，鱼戏莲叶西，鱼戏莲叶南，鱼戏莲叶北。",
+    "dynasty": "汉代"
+  },
+  {
+    "id": 1,
+    "title": "长歌行",
+    "author": "汉乐府",
+    "content": "青青园中葵，朝露待日晞。阳春布德泽，万物生光辉。常恐秋节至，焜黄华叶衰。百川东到海，何时复西归？少壮不努力，老大徒伤悲。",
+    "dynasty": "汉代"
+  },
+  {
+    "id": 2,
+    "title": "敕勒歌",
+    "author": "北朝民歌",
+    "content": "敕勒川，阴山下。天似穹庐，笼盖四野。天苍苍，野茫茫。风吹草低见牛羊。",
+    "dynasty": "北朝"
+  },
+  {
+    "id": 3,
+    "title": "咏鹅",
+    "author": "骆宾王",
+    "content": "鹅鹅鹅，曲项向天歌。白毛浮绿水，红掌拨清波。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 4,
+    "title": "风",
+    "author": "李峤",
+    "content": "解落三秋叶，能开二月花。过江千尺浪，入竹万竿斜。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 5,
+    "title": "咏柳",
+    "author": "贺知章",
+    "content": "碧玉妆成一树高，万条垂下绿丝绦。不知细叶谁裁出，二月春风似剪刀。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 6,
+    "title": "回乡偶书",
+    "author": "贺知章",
+    "content": "少小离家老大回，乡音无改鬓毛衰。儿童相见不相识，笑问客从何处来。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 7,
+    "title": "凉州词",
+    "author": "王之涣",
+    "content": "黄河远上白云间，一片孤城万仞山。羌笛何须怨杨柳，春风不度玉门关。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 8,
+    "title": "登鹳雀楼",
+    "author": "王之涣",
+    "content": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 9,
+    "title": "春晓",
+    "author": "孟浩然",
+    "content": "春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 10,
+    "title": "凉州词",
+    "author": "王翰",
+    "content": "葡萄美酒夜光杯，欲饮琵琶马上催。醉卧沙场君莫笑，古来征战几人回？",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 11,
+    "title": "出塞二首·其一",
+    "author": "王昌龄",
+    "content": "秦时明月汉时关，万里长征人未还。但使龙城飞将在，不教胡马度阴山。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 12,
+    "title": "芙蓉楼送辛渐",
+    "author": "王昌龄",
+    "content": "寒雨连江夜入吴，平明送客楚山孤。洛阳亲友如相问，一片冰心在玉壶。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 13,
+    "title": "鹿柴",
+    "author": "王维",
+    "content": "空山不见人，但闻人语响。返景入深林，复照青苔上。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 14,
+    "title": "渭城曲",
+    "author": "王维",
+    "content": "渭城朝雨浥轻尘，客舍青青柳色新。劝君更尽一杯酒，西出阳关无故人。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 15,
+    "title": "九月九日忆山东兄弟",
+    "author": "王维",
+    "content": "独在异乡为异客，每逢佳节倍思亲。遥知兄弟登高处，遍插茱萸少一人。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 16,
+    "title": "静夜思",
+    "author": "李白",
+    "content": "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 17,
+    "title": "古朗月行",
+    "author": "李白",
+    "content": "小时不识月，呼作白玉盘。又疑瑶台镜，飞在青云端。仙人垂两足，桂树何团团。白兔捣药成，问言与谁餐。蟾蜍蚀圆影，大明夜已残。羿昔落九乌，天人清且安。阴精此沦惑，去去不足观。忧来其如何，凄怆摧心肝。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 18,
+    "title": "望庐山瀑布",
+    "author": "李白",
+    "content": "日照香炉生紫烟，遥看瀑布挂前川。飞流直下三千尺，疑是银河落九天。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 19,
+    "title": "赠汪伦",
+    "author": "李白",
+    "content": "李白乘舟将欲行，忽闻岸上踏歌声。桃花潭水深千尺，不及汪伦送高情。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 20,
+    "title": "黄鹤楼送孟浩然之广陵",
+    "author": "李白",
+    "content": "故人西辞黄鹤楼，烟花三月下扬州。孤帆远影碧空尽，唯见长江天际流。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 21,
+    "title": "早发白帝城",
+    "author": "李白",
+    "content": "朝辞白帝彩云间，千里江陵一日还。两岸猿声啼不住，轻舟已过万重山。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 22,
+    "title": "望天门山",
+    "author": "李白",
+    "content": "天门中断楚江开，碧水东流至此回。两岸青山相对出，孤帆一片日边来。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 23,
+    "title": "别董大",
+    "author": "高适",
+    "content": "千里黄云白日曛，北风吹雁雪纷纷。莫愁前路无知己，天下谁人不识君？",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 24,
+    "title": "绝句",
+    "author": "杜甫",
+    "content": "两个黄鹂鸣翠柳，一行白鹭上青天。窗含西岭千秋雪，门泊东吴万里船。/ 迟日江山丽，春风花草香。泥融飞燕子，沙暖睡鸳鸯。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 25,
+    "title": "春夜喜雨",
+    "author": "杜甫",
+    "content": "好雨知时节，当春乃发生。随风潜入夜，润物细无声。野径云俱黑，江船火独明。晓看红湿处，花重锦官城。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 26,
+    "title": "江畔独步寻花",
+    "author": "杜甫",
+    "content": "黄师塔前江水东，春光懒困倚微风。桃花一簇开无主，可爱深红爱浅红？",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 27,
+    "title": "枫桥夜泊",
+    "author": "张继",
+    "content": "月落乌啼霜满天，江枫渔火对愁眠。姑苏城外寒山寺，夜半钟声到客船。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 28,
+    "title": "滁州西涧",
+    "author": "韦应物",
+    "content": "独怜幽草涧边生，上有黄鹂深树鸣。春潮带雨晚来急，野渡无人舟自横。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 29,
+    "title": "游子吟",
+    "author": "孟郊",
+    "content": "慈母手中线，游子身上衣。临行密密缝，意恐迟迟归。谁言寸草心，报得三春晖。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 30,
+    "title": "早春呈水部张十八员外",
+    "author": "韩愈",
+    "content": "天街小雨润如酥，草色遥看近却无。最是一年春好处，绝胜烟柳满皇都。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 31,
+    "title": "渔歌子",
+    "author": "张志和",
+    "content": "西塞山前白鹭飞，桃花流水鳜鱼肥。青箬笠，绿蓑衣，斜风细雨不须归。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 32,
+    "title": "塞下曲",
+    "author": "卢纶",
+    "content": "月黑雁飞高，单于夜遁逃。欲将轻骑逐，大雪满弓刀。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 33,
+    "title": "望洞庭",
+    "author": "刘禹锡",
+    "content": "湖光秋月两相和，潭面无风镜未磨。遥望洞庭山水色，白银盘里一青螺。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 34,
+    "title": "浪淘沙",
+    "author": "刘禹锡",
+    "content": "九曲黄河万里沙，浪淘风簸自天涯。如今直上银河去，同到牵牛织女家。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 35,
+    "title": "赋得古原草送别",
+    "author": "白居易",
+    "content": "离离原上草，一岁一枯荣。野火烧不尽，春风吹又生。远芳侵古道，晴翠接荒城。又送王孙去，萋萋满别情。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 36,
+    "title": "池上",
+    "author": "白居易",
+    "content": "小娃撑小艇，偷采白莲回。不解藏踪迹，浮萍一道开。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 37,
+    "title": "忆江南",
+    "author": "白居易",
+    "content": "江南好，风景旧曾谙。日出江花红胜火，春来江水绿如蓝。能不忆江南？",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 38,
+    "title": "小儿垂钓",
+    "author": "胡令能",
+    "content": "蓬头稚子学垂纶，侧坐莓苔草映身。路人借问遥招手，怕得鱼惊不应人。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 39,
+    "title": "悯农",
+    "author": "李绅",
+    "content": "锄禾日当午，汗滴禾下土。谁知盘中餐，粒粒皆辛苦。/ 春种一粒粟，秋收万颗子。四海无闲田，农夫犹饿死。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 40,
+    "title": "江雪",
+    "author": "柳宗元",
+    "content": "千山鸟飞绝，万径人踪灭。孤舟蓑笠翁，独钓寒江雪。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 41,
+    "title": "寻隐者不遇",
+    "author": "贾岛",
+    "content": "松下问童子，言师采药去。只在此山中，云深不知处。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 42,
+    "title": "山行",
+    "author": "杜牧",
+    "content": "远上寒山石径斜，白云生处有人家。停车坐爱枫林晚，霜叶红于二月花。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 43,
+    "title": "清明",
+    "author": "杜牧",
+    "content": "清明时节雨纷纷，路上行人欲断魂。借问酒家何处有？牧童遥指杏花村。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 44,
+    "title": "江南春",
+    "author": "杜牧",
+    "content": "千里莺啼绿映红，水村山郭酒旗风。南朝四百八十寺，多少楼台烟雨中。",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 45,
+    "title": "蜂",
+    "author": "罗隐",
+    "content": "不论平地与山尖，无限风光尽被占。采得百花成蜜后，为谁辛苦为谁甜？",
+    "dynasty": "唐代"
+  },
+  {
+    "id": 46,
+    "title": "江上渔者",
+    "author": "范仲淹",
+    "content": "江上往来人，但爱鲈鱼美。君看一叶舟，出没风波里。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 47,
+    "title": "元日",
+    "author": "王安石",
+    "content": "爆竹声中一岁除，春风送暖入屠苏。千门万户曈曈日，总把新桃换旧符。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 48,
+    "title": "泊船瓜洲",
+    "author": "王安石",
+    "content": "京口瓜洲一水间，钟山只隔数重山。春风又绿江南岸，明月何时照我还？",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 49,
+    "title": "书湖阴先生壁",
+    "author": "王安石",
+    "content": "茅檐长扫净无苔，花木成畦手自栽。一水护田将绿绕，两山排闼送青来。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 50,
+    "title": "六月二十七日望湖楼醉书",
+    "author": "苏轼",
+    "content": "黑云翻墨未遮山，白雨跳珠乱入船。卷地风来忽吹散，望湖楼下水如天。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 51,
+    "title": "饮湖上初晴后雨",
+    "author": "苏轼",
+    "content": "水光潋滟晴方好，山色空蒙雨亦奇。欲把西湖比西子，淡妆浓抹总相宜。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 52,
+    "title": "惠崇春江晓景",
+    "author": "苏轼",
+    "content": "竹外桃花三两枝，春江水暖鸭先知。蒌蒿满地芦芽短，正是河豚欲上时。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 53,
+    "title": "题西林壁",
+    "author": "苏轼",
+    "content": "横看成岭侧成峰，远近高低各不同。不识庐山真面目，只缘身在此山中。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 54,
+    "title": "夏日绝句",
+    "author": "李清照",
+    "content": "生当作人杰，死亦为鬼雄。至今思项羽，不肯过江东。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 55,
+    "title": "三衢道中",
+    "author": "曾几",
+    "content": "梅子黄时日日晴，小溪泛尽却山行。绿阴不减来时路，添得黄鹂四五声。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 56,
+    "title": "示儿",
+    "author": "陆游",
+    "content": "死去元知万事空，但悲不见九州同。王师北定中原日，家祭无忘告乃翁。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 57,
+    "title": "秋夜将晓出篱门迎凉有感",
+    "author": "陆游",
+    "content": "三万里河东入海，五千仞岳上摩天。遗民泪尽胡尘里，南望王师又一年。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 58,
+    "title": "四时田园杂兴",
+    "author": "范成大",
+    "content": "昼出耘田夜绩麻，村庄儿女各当家。童孙未解供耕织，也傍桑阴学种瓜。/ 梅子金黄杏子肥，麦花雪白菜花稀。日长篱落无人过，唯有蜻蜓蛱蝶飞。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 59,
+    "title": "小池",
+    "author": "杨万里",
+    "content": "泉眼无声惜细流，树阴照水爱晴柔。小荷才露尖尖角，早有蜻蜓立上头。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 60,
+    "title": "晓出净慈寺送林子方",
+    "author": "杨万里",
+    "content": "毕竟西湖六月中，风光不与四时同。接天莲叶无穷碧，映日荷花别样红。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 61,
+    "title": "春日",
+    "author": "朱熹",
+    "content": "胜日寻芳泗水滨，无边光景一时新。等闲识得东风面，万紫千红总是春。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 62,
+    "title": "观书有感",
+    "author": "朱熹",
+    "content": "半亩方塘一鉴开，天光云影共徘徊。问渠那得清如许？为有源头活水来。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 63,
+    "title": "题临安邸",
+    "author": "林升",
+    "content": "山外青山楼外楼，西湖歌舞几时休？暖风熏得游人醉，直把杭州作汴州。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 64,
+    "title": "游园不值",
+    "author": "叶绍翁",
+    "content": "应怜屐齿印苍苔，小扣柴扉久不开。春色满园关不住，一枝红杏出墙来。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 65,
+    "title": "乡村四月",
+    "author": "翁卷",
+    "content": "绿遍山原白满川，子规声里雨如烟。乡村四月闲人少，才了蚕桑又插田。",
+    "dynasty": "宋代"
+  },
+  {
+    "id": 66,
+    "title": "墨梅",
+    "author": "王冕",
+    "content": "我家洗砚池头树，朵朵花开淡墨痕。不要人夸好颜色，只留清气满乾坤。",
+    "dynasty": "元代"
+  },
+  {
+    "id": 67,
+    "title": "石灰吟",
+    "author": "于谦",
+    "content": "千锤万凿出深山，烈火焚烧若等闲。粉骨碎身浑不怕，要留清白在人间。",
+    "dynasty": "明代"
+  },
+  {
+    "id": 68,
+    "title": "竹石",
+    "author": "郑燮",
+    "content": "咬定青山不放松，立根原在破岩中。千磨万击还坚劲，任尔东西南北风。",
+    "dynasty": "清代"
+  },
+  {
+    "id": 69,
+    "title": "所见",
+    "author": "袁枚",
+    "content": "牧童骑黄牛，歌声振林樾。意欲捕鸣蝉，忽然闭口立。",
+    "dynasty": "清代"
+  },
+  {
+    "id": 70,
+    "title": "村居",
+    "author": "高鼎",
+    "content": "草长莺飞二月天，拂堤杨柳醉春烟。儿童散学归来早，忙趁东风放纸鸢。",
+    "dynasty": "清代"
+  },
+  {
+    "id": 71,
+    "title": "己亥杂诗",
+    "author": "龚自珍",
+    "content": "九州生气恃风雷，万马齐喑究可哀。我劝天公重抖擞，不拘一格降人材。",
+    "dynasty": "清代"
+  }
+];
+
+const PINYIN = {"江南可采莲": "jiāng nán kě cǎi lián", "莲叶何田田": "lián yè hé tián tián", "鱼戏莲叶间": "yú xì lián yè jiān", "鱼戏莲叶东": "yú xì lián yè dōng", "鱼戏莲叶西": "yú xì lián yè xī", "鱼戏莲叶南": "yú xì lián yè nán", "鱼戏莲叶北": "yú xì lián yè běi", "青青园中葵": "qīng qīng yuán zhōng kuí", "朝露待日晞": "zhāo lù dài rì xī", "阳春布德泽": "yáng chūn bù dé zé", "万物生光辉": "wàn wù shēng guāng huī", "常恐秋节至": "cháng kǒng qiū jié zhì", "焜黄华叶衰": "kūn huáng huá yè shuāi", "百川东到海": "bǎi chuān dōng dào hǎi", "何时复西归": "hé shí fù xī guī", "少壮不努力": "shào zhuàng bù nǔ lì", "老大徒伤悲": "lǎo dà tú shāng bēi", "敕勒川": "chì lè chuān", "阴山下": "yīn shān xià", "天似穹庐": "tiān sì qióng lú", "笼盖四野": "lǒng gài sì yě", "天苍苍": "tiān cāng cāng", "野茫茫": "yě máng máng", "风吹草低见牛羊": "fēng chuī cǎo dī xiàn niú yáng", "鹅鹅鹅": "é é é", "曲项向天歌": "qū xiàng xiàng tiān gē", "白毛浮绿水": "bái máo fú lǜ shuǐ", "红掌拨清波": "hóng zhǎng bō qīng bō", "解落三秋叶": "jiě luò sān qiū yè", "能开二月花": "néng kāi èr yuè huā", "过江千尺浪": "guò jiāng qiān chǐ làng", "入竹万竿斜": "rù zhú wàn gān xié", "碧玉妆成一树高": "bì yù zhuāng chéng yī shù gāo", "万条垂下绿丝绦": "wàn tiáo chuí xià lǜ sī tāo", "不知细叶谁裁出": "bù zhī xì yè shuí cái chū", "二月春风似剪刀": "èr yuè chūn fēng sì jiǎn dāo", "少小离家老大回": "shào xiǎo lí jiā lǎo dà huí", "乡音无改鬓毛衰": "xiāng yīn wú gǎi bìn máo shuāi", "儿童相见不相识": "ér tóng xiāng jiàn bù xiāng shí", "笑问客从何处来": "xiào wèn kè cóng hé chù lái", "黄河远上白云间": "huáng hé yuǎn shàng bái yún jiān", "一片孤城万仞山": "yī piàn gū chéng wàn rèn shān", "羌笛何须怨杨柳": "qiāng dí hé xū yuàn yáng liǔ", "春风不度玉门关": "chūn fēng bù dù yù mén guān", "白日依山尽": "bái rì yī shān jìn", "黄河入海流": "huáng hé rù hǎi liú", "欲穷千里目": "yù qióng qiān lǐ mù", "更上一层楼": "gèng shàng yī céng lóu", "春眠不觉晓": "chūn mián bù jué xiǎo", "处处闻啼鸟": "chù chù wén tí niǎo", "夜来风雨声": "yè lái fēng yǔ shēng", "花落知多少": "huā luò zhī duō shǎo", "葡萄美酒夜光杯": "pú táo měi jiǔ yè guāng bēi", "欲饮琵琶马上催": "yù yǐn pí pá mǎ shàng cuī", "醉卧沙场君莫笑": "zuì wò shā chǎng jūn mò xiào", "古来征战几人回": "gǔ lái zhēng zhàn jǐ rén huí", "秦时明月汉时关": "qín shí míng yuè hàn shí guān", "万里长征人未还": "wàn lǐ cháng zhēng rén wèi huán", "但使龙城飞将在": "dàn shǐ lóng chéng fēi jiàng zài", "不教胡马度阴山": "bù jiāo hú mǎ dù yīn shān", "寒雨连江夜入吴": "hán yǔ lián jiāng yè rù wú", "平明送客楚山孤": "píng míng sòng kè chǔ shān gū", "洛阳亲友如相问": "luò yáng qīn yǒu rú xiāng wèn", "一片冰心在玉壶": "yī piàn bīng xīn zài yù hú", "空山不见人": "kōng shān bú jiàn rén", "但闻人语响": "dàn wén rén yǔ xiǎng", "返景入深林": "fǎn jǐng rù shēn lín", "复照青苔上": "fù zhào qīng tái shàng", "渭城朝雨浥轻尘": "wèi chéng zhāo yǔ yì qīng chén", "客舍青青柳色新": "kè shè qīng qīng liǔ sè xīn", "劝君更尽一杯酒": "quàn jūn gèng jìn yī bēi jiǔ", "西出阳关无故人": "xī chū yáng guān wú gù rén", "独在异乡为异客": "dú zài yì xiāng wéi yì kè", "每逢佳节倍思亲": "měi féng jiā jié bèi sī qīn", "遥知兄弟登高处": "yáo zhī xiōng dì dēng gāo chù", "遍插茱萸少一人": "biàn chā zhū yú shǎo yī rén", "床前明月光": "chuáng qián míng yuè guāng", "疑是地上霜": "yí shì dì shàng shuāng", "举头望明月": "jǔ tóu wàng míng yuè", "低头思故乡": "dī tóu sī gù xiāng", "小时不识月": "xiǎo shí bù shí yuè", "呼作白玉盘": "hū zuò bái yù pán", "又疑瑶台镜": "yòu yí yáo tái jìng", "飞在青云端": "fēi zài qīng yún duān", "日照香炉生紫烟": "rì zhào xiāng lú shēng zǐ yān", "遥看瀑布挂前川": "yáo kàn pù bù guà qián chuān", "飞流直下三千尺": "fēi liú zhí xià sān qiān chǐ", "疑是银河落九天": "yí shì yín hé luò jiǔ tiān", "李白乘舟将欲行": "lǐ bái chéng zhōu jiāng yù xíng", "忽闻岸上踏歌声": "hū wén àn shàng tà gē shēng", "桃花潭水深千尺": "táo huā tán shuǐ shēn qiān chǐ", "不及汪伦送高情": "bù jí wāng lún sòng gāo qíng", "故人西辞黄鹤楼": "gù rén xī cí huáng hè lóu", "烟花三月下扬州": "yān huā sān yuè xià yáng zhōu", "孤帆远影碧空尽": "gū fān yuǎn yǐng bì kōng jìn", "唯见长江天际流": "wéi jiàn cháng jiāng tiān jì liú", "朝辞白帝彩云间": "zhāo cí bái dì cǎi yún jiān", "千里江陵一日还": "qiān lǐ jiāng líng yī rì huán", "两岸猿声啼不住": "liǎng àn yuán shēng tí bú zhù", "轻舟已过万重山": "qīng zhōu yǐ guò wàn chóng shān", "天门中断楚江开": "tiān mén zhōng duàn chǔ jiāng kāi", "碧水东流至此回": "bì shuǐ dōng liú zhì cǐ huí", "两岸青山相对出": "liǎng àn qīng shān xiāng duì chū", "孤帆一片日边来": "gū fān yī piàn rì biān lái", "千里黄云白日曛": "qiān lǐ huáng yún bái rì xūn", "北风吹雁雪纷纷": "běi fēng chuī yàn xuě fēn fēn", "莫愁前路无知己": "mò chóu qián lù wú zhī jǐ", "天下谁人不识君": "tiān xià shuí rén bù shí jūn", "两个黄鹂鸣翠柳": "liǎng gè huáng lí míng cuì liǔ", "一行白鹭上青天": "yī háng bái lù shàng qīng tiān", "窗含西岭千秋雪": "chuāng hán xī lǐng qiān qiū xuě", "门泊东吴万里船": "mén bó dōng wú wàn lǐ chuán", "迟日江山丽": "chí rì jiāng shān lì", "春风花草香": "chūn fēng huā cǎo xiāng", "泥融飞燕子": "ní róng fēi yàn zi", "沙暖睡鸳鸯": "shā nuǎn shuì yuān yāng", "好雨知时节": "hǎo yǔ zhī shí jié", "当春乃发生": "dāng chūn nǎi fā shēng", "随风潜入夜": "suí fēng qián rù yè", "润物细无声": "rùn wù xì wú shēng", "野径云俱黑": "yě jìng yún jù hēi", "江船火独明": "jiāng chuán huǒ dú míng", "晓看红湿处": "xiǎo kàn hóng shī chù", "花重锦官城": "huā zhòng jǐn guān chéng", "黄师塔前江水东": "huáng shī tǎ qián jiāng shuǐ dōng", "春光懒困倚微风": "chūn guāng lǎn kùn yǐ wēi fēng", "桃花一簇开无主": "táo huā yī cù kāi wú zhǔ", "可爱深红爱浅红": "kě ài shēn hóng ài qiǎn hóng", "月落乌啼霜满天": "yuè luò wū tí shuāng mǎn tiān", "江枫渔火对愁眠": "jiāng fēng yú huǒ duì chóu mián", "姑苏城外寒山寺": "gū sū chéng wài hán shān sì", "夜半钟声到客船": "yè bàn zhōng shēng dào kè chuán", "独怜幽草涧边生": "dú lián yōu cǎo jiàn biān shēng", "上有黄鹂深树鸣": "shàng yǒu huáng lí shēn shù míng", "春潮带雨晚来急": "chūn cháo dài yǔ wǎn lái jí", "野渡无人舟自横": "yě dù wú rén zhōu zì héng", "慈母手中线": "cí mǔ shǒu zhōng xiàn", "游子身上衣": "yóu zǐ shēn shàng yī", "临行密密缝": "lín xíng mì mì féng", "意恐迟迟归": "yì kǒng chí chí guī", "谁言寸草心": "shuí yán cùn cǎo xīn", "报得三春晖": "bào dé sān chūn huī", "天街小雨润如酥": "tiān jiē xiǎo yǔ rùn rú sū", "草色遥看近却无": "cǎo sè yáo kàn jìn què wú", "最是一年春好处": "zuì shì yī nián chūn hǎo chù", "绝胜烟柳满皇都": "jué shèng yān liǔ mǎn huáng dū", "西塞山前白鹭飞": "xī sài shān qián bái lù fēi", "桃花流水鳜鱼肥": "táo huā liú shuǐ guì yú féi", "青箬笠": "qīng ruò lì", "绿蓑衣": "lǜ suō yī", "斜风细雨不须归": "xié fēng xì yǔ bù xū guī", "月黑雁飞高": "yuè hēi yàn fēi gāo", "单于夜遁逃": "chán yú yè dùn táo", "欲将轻骑逐": "yù jiāng qīng qí zhú", "大雪满弓刀": "dà xuě mǎn gōng dāo", "湖光秋月两相和": "hú guāng qiū yuè liǎng xiāng hé", "潭面无风镜未磨": "tán miàn wú fēng jìng wèi mó", "遥望洞庭山水色": "yáo wàng dòng tíng shān shuǐ sè", "白银盘里一青螺": "bái yín pán lǐ yī qīng luó", "九曲黄河万里沙": "jiǔ qū huáng hé wàn lǐ shā", "浪淘风簸自天涯": "làng táo fēng bǒ zì tiān yá", "如今直上银河去": "rú jīn zhí shàng yín hé qù", "同到牵牛织女家": "tóng dào qiān niú zhī nǚ jiā", "离离原上草": "lí lí yuán shàng cǎo", "一岁一枯荣": "yī suì yī kū róng", "野火烧不尽": "yě huǒ shāo bù jìn", "春风吹又生": "chūn fēng chuī yòu shēng", "远芳侵古道": "yuǎn fāng qīn gǔ dào", "晴翠接荒城": "qíng cuì jiē huāng chéng", "又送王孙去": "yòu sòng wáng sūn qù", "萋萋满别情": "qī qī mǎn bié qíng", "小娃撑小艇": "xiǎo wá chēng xiǎo tǐng", "偷采白莲回": "tōu cǎi bái lián huí", "不解藏踪迹": "bù jiě cáng zōng jì", "浮萍一道开": "fú píng yī dào kāi", "江南好": "jiāng nán hǎo", "风景旧曾谙": "fēng jǐng jiù céng ān", "日出江花红胜火": "rì chū jiāng huā hóng shèng huǒ", "春来江水绿如蓝": "chūn lái jiāng shuǐ lǜ rú lán", "能不忆江南": "néng bù yì jiāng nán", "蓬头稚子学垂纶": "péng tóu zhì zǐ xué chuí lún", "侧坐莓苔草映身": "cè zuò méi tái cǎo yìng shēn", "路人借问遥招手": "lù rén jiè wèn yáo zhāo shǒu", "怕得鱼惊不应人": "pà dé yú jīng bù yìng rén", "锄禾日当午": "chú hé rì dāng wǔ", "汗滴禾下土": "hàn dī hé xià tǔ", "谁知盘中餐": "shuí zhī pán zhōng cān", "粒粒皆辛苦": "lì lì jiē xīn kǔ", "春种一粒粟": "chūn zhòng yī lì sù", "秋收万颗子": "qiū shōu wàn kē zǐ", "四海无闲田": "sì hǎi wú xián tián", "农夫犹饿死": "nóng fū yóu è sǐ", "千山鸟飞绝": "qiān shān niǎo fēi jué", "万径人踪灭": "wàn jìng rén zōng miè", "孤舟蓑笠翁": "gū zhōu suō lì wēng", "独钓寒江雪": "dú diào hán jiāng xuě", "松下问童子": "sōng xià wèn tóng zǐ", "言师采药去": "yán shī cǎi yào qù", "只在此山中": "zhǐ zài cǐ shān zhōng", "云深不知处": "yún shēn bù zhī chù", "远上寒山石径斜": "yuǎn shàng hán shān shí jìng xié", "白云生处有人家": "bái yún shēng chù yǒu rén jiā", "停车坐爱枫林晚": "tíng chē zuò ài fēng lín wǎn", "霜叶红于二月花": "shuāng yè hóng yú èr yuè huā", "清明时节雨纷纷": "qīng míng shí jié yǔ fēn fēn", "路上行人欲断魂": "lù shàng xíng rén yù duàn hún", "借问酒家何处有": "jiè wèn jiǔ jiā hé chù yǒu", "牧童遥指杏花村": "mù tóng yáo zhǐ xìng huā cūn", "千里莺啼绿映红": "qiān lǐ yīng tí lǜ yìng hóng", "水村山郭酒旗风": "shuǐ cūn shān guō jiǔ qí fēng", "南朝四百八十寺": "nán cháo sì bǎi bā shí sì", "多少楼台烟雨中": "duō shǎo lóu tái yān yǔ zhōng", "不论平地与山尖": "bù lùn píng dì yǔ shān jiān", "无限风光尽被占": "wú xiàn fēng guāng jìn bèi zhàn", "采得百花成蜜后": "cǎi dé bǎi huā chéng mì hòu", "为谁辛苦为谁甜": "wèi shuí xīn kǔ wèi shuí tián", "江上往来人": "jiāng shàng wǎng lái rén", "但爱鲈鱼美": "dàn ài lú yú měi", "君看一叶舟": "jūn kàn yī yè zhōu", "出没风波里": "chū mò fēng bō lǐ", "爆竹声中一岁除": "bào zhú shēng zhōng yī suì chú", "春风送暖入屠苏": "chūn fēng sòng nuǎn rù tú sū", "千门万户曈曈日": "qiān mén wàn hù tóng tóng rì", "总把新桃换旧符": "zǒng bǎ xīn táo huàn jiù fú", "京口瓜洲一水间": "jīng kǒu guā zhōu yī shuǐ jiān", "钟山只隔数重山": "zhōng shān zhǐ gé shù chóng shān", "春风又绿江南岸": "chūn fēng yòu lǜ jiāng nán àn", "明月何时照我还": "míng yuè hé shí zhào wǒ huán", "茅檐长扫净无苔": "máo yán cháng sǎo jìng wú tái", "花木成畦手自栽": "huā mù chéng qí shǒu zì zāi", "一水护田将绿绕": "yī shuǐ hù tián jiāng lǜ rào", "两山排闼送青来": "liǎng shān pái tà sòng qīng lái", "黑云翻墨未遮山": "hēi yún fān mò wèi zhē shān", "白雨跳珠乱入船": "bái yǔ tiào zhū luàn rù chuán", "卷地风来忽吹散": "juǎn dì fēng lái hū chuī sàn", "望湖楼下水如天": "wàng hú lóu xià shuǐ rú tiān", "水光潋滟晴方好": "shuǐ guāng liàn yàn qíng fāng hǎo", "山色空蒙雨亦奇": "shān sè kōng méng yǔ yì qí", "欲把西湖比西子": "yù bǎ xī hú bǐ xī zǐ", "淡妆浓抹总相宜": "dàn zhuāng nóng mǒ zǒng xiāng yí", "竹外桃花三两枝": "zhú wài táo huā sān liǎng zhī", "春江水暖鸭先知": "chūn jiāng shuǐ nuǎn yā xiān zhī", "蒌蒿满地芦芽短": "lóu hāo mǎn dì lú yá duǎn", "正是河豚欲上时": "zhèng shì hé tún yù shàng shí", "横看成岭侧成峰": "héng kàn chéng lǐng cè chéng fēng", "远近高低各不同": "yuǎn jìn gāo dī gè bù tóng", "不识庐山真面目": "bù shí lú shān zhēn miàn mù", "只缘身在此山中": "zhǐ yuán shēn zài cǐ shān zhōng", "生当作人杰": "shēng dàng zuò rén jié", "死亦为鬼雄": "sǐ yì wéi guǐ xióng", "至今思项羽": "zhì jīn sī xiàng yǔ", "不肯过江东": "bù kěn guò jiāng dōng", "梅子黄时日日晴": "méi zǐ huáng shí rì rì qíng", "小溪泛尽却山行": "xiǎo xī fàn jìn què shān xíng", "绿阴不减来时路": "lǜ yīn bù jiǎn lái shí lù", "添得黄鹂四五声": "tiān dé huáng lí sì wǔ shēng", "死去元知万事空": "sǐ qù yuán zhī wàn shì kōng", "但悲不见九州同": "dàn bēi bú jiàn jiǔ zhōu tóng", "王师北定中原日": "wáng shī běi dìng zhōng yuán rì", "家祭无忘告乃翁": "jiā jì wú wàng gào nǎi wēng", "三万里河东入海": "sān wàn lǐ hé dōng rù hǎi", "五千仞岳上摩天": "wǔ qiān rèn yuè shàng mó tiān", "遗民泪尽胡尘里": "yí mín lèi jìn hú chén lǐ", "南望王师又一年": "nán wàng wáng shī yòu yī nián", "昼出耘田夜绩麻": "zhòu chū yún tián yè jì má", "村庄儿女各当家": "cūn zhuāng ér nǚ gè dāng jiā", "童孙未解供耕织": "tóng sūn wèi jiě gòng gēng zhī", "也傍桑阴学种瓜": "yě bàng sāng yīn xué zhòng guā", "梅子金黄杏子肥": "méi zǐ jīn huáng xìng zǐ féi", "麦花雪白菜花稀": "mài huā xuě bái cài huā xī", "日长篱落无人过": "rì cháng lí luò wú rén guò", "唯有蜻蜓蛱蝶飞": "wéi yǒu qīng tíng jiá dié fēi", "泉眼无声惜细流": "quán yǎn wú shēng xī xì liú", "树阴照水爱晴柔": "shù yīn zhào shuǐ ài qíng róu", "小荷才露尖尖角": "xiǎo hé cái lù jiān jiān jiǎo", "早有蜻蜓立上头": "zǎo yǒu qīng tíng lì shàng tóu", "毕竟西湖六月中": "bì jìng xī hú liù yuè zhōng", "风光不与四时同": "fēng guāng bù yǔ sì shí tóng", "接天莲叶无穷碧": "jiē tiān lián yè wú qióng bì", "映日荷花别样红": "yìng rì hé huā bié yàng hóng", "胜日寻芳泗水滨": "shèng rì xún fāng sì shuǐ bīn", "无边光景一时新": "wú biān guāng jǐng yī shí xīn", "等闲识得东风面": "děng xián shí dé dōng fēng miàn", "万紫千红总是春": "wàn zǐ qiān hóng zǒng shì chūn", "半亩方塘一鉴开": "bàn mǔ fāng táng yī jiàn kāi", "天光云影共徘徊": "tiān guāng yún yǐng gòng pái huái", "问渠那得清如许": "wèn qú nà dé qīng rú xǔ", "为有源头活水来": "wèi yǒu yuán tóu huó shuǐ lái", "山外青山楼外楼": "shān wài qīng shān lóu wài lóu", "西湖歌舞几时休": "xī hú gē wǔ jǐ shí xiū", "暖风熏得游人醉": "nuǎn fēng xūn dé yóu rén zuì", "直把杭州作汴州": "zhí bǎ háng zhōu zuò biàn zhōu", "应怜屐齿印苍苔": "yīng lián jī chǐ yìn cāng tái", "小扣柴扉久不开": "xiǎo kòu chái fēi jiǔ bù kāi", "春色满园关不住": "chūn sè mǎn yuán guān bú zhù", "一枝红杏出墙来": "yī zhī hóng xìng chū qiáng lái", "绿遍山原白满川": "lǜ biàn shān yuán bái mǎn chuān", "子规声里雨如烟": "zǐ guī shēng lǐ yǔ rú yān", "乡村四月闲人少": "xiāng cūn sì yuè xián rén shǎo", "才了蚕桑又插田": "cái liǎo cán sāng yòu chā tián", "我家洗砚池头树": "wǒ jiā xǐ yàn chí tóu shù", "朵朵花开淡墨痕": "duǒ duǒ huā kāi dàn mò hén", "不要人夸好颜色": "bù yào rén kuā hǎo yán sè", "只留清气满乾坤": "zhǐ liú qīng qì mǎn qián kūn", "千锤万凿出深山": "qiān chuí wàn záo chū shēn shān", "烈火焚烧若等闲": "liè huǒ fén shāo ruò děng xián", "粉骨碎身浑不怕": "fěn gǔ suì shēn hún bù pà", "要留清白在人间": "yào liú qīng bái zài rén jiān", "咬定青山不放松": "yǎo dìng qīng shān bù fàng sōng", "立根原在破岩中": "lì gēn yuán zài pò yán zhōng", "千磨万击还坚劲": "qiān mó wàn jī hái jiān jìn", "任尔东西南北风": "rèn ěr dōng xī nán běi fēng", "牧童骑黄牛": "mù tóng qí huáng niú", "歌声振林樾": "gē shēng zhèn lín yuè", "意欲捕鸣蝉": "yì yù bǔ míng chán", "忽然闭口立": "hū rán bì kǒu lì", "草长莺飞二月天": "cǎo zhǎng yīng fēi èr yuè tiān", "拂堤杨柳醉春烟": "fú dī yáng liǔ zuì chūn yān", "儿童散学归来早": "ér tóng sàn xué guī lái zǎo", "忙趁东风放纸鸢": "máng chèn dōng fēng fàng zhǐ yuān", "九州生气恃风雷": "jiǔ zhōu shēng qì shì fēng léi", "万马齐喑究可哀": "wàn mǎ qí yīn jiū kě āi", "我劝天公重抖擞": "wǒ quàn tiān gōng chóng dǒu sǒu", "不拘一格降人材": "bù jū yī gé jiàng rén cái", "仙人垂两足": "xiān rén chuí liǎng zú", "桂树何团团": "guì shù hé tuán tuán", "白兔捣药成": "bái tù dǎo yào chéng", "问言与谁餐": "wèn yán yǔ shuí cān", "蟾蜍蚀圆影": "chán chú shí yuán yǐng", "大明夜已残": "dà míng yè yǐ cán", "羿昔落九乌": "yì xī luò jiǔ wū", "天人清且安": "tiān rén qīng qiě ān", "阴精此沦惑": "yīn jīng cǐ lún huò", "去去不足观": "qù qù bù zú guān", "忧来其如何": "yōu lái qí rú hé", "凄怆摧心肝": "qī chuàng cuī xīn gān"};
+
+// === SCENE GENERATOR (keyword-driven per poem) ===
+function detectScene(title, content) {
+  const text = title + content;
+  // Highly specific scenes based on actual poem content
+  if (/咏鹅|鹅/.test(text)) return "goose";
+  if (/莲|荷|采莲|芙蓉/.test(text)) return "lotus";
+  if (/瀑布|飞流/.test(text)) return "waterfall";
+  if (/枫桥|枫林|霜叶|山行/.test(text)) return "autumn_maple";
+  if (/江雪|独钓|寒江/.test(text)) return "winter_river";
+  if (/清明|杏花村/.test(text)) return "rain_village";
+  if (/登鹳雀楼|更上一层楼/.test(text)) return "tower";
+  if (/咏柳|柳/.test(text)) return "willow";
+  if (/敕勒|草原|牛羊/.test(text)) return "grassland";
+  if (/静夜思|明月|思故乡|望明月/.test(text)) return "moon_night";
+  if (/竹|梅兰竹菊/.test(text)) return "bamboo";
+  if (/春晓|春眠|鸟/.test(text)) return "spring_morning";
+  if (/黄河|浪淘沙|银河/.test(text)) return "yellow_river";
+  if (/西湖|饮湖上|晓出净慈|莲叶/.test(text)) return "west_lake";
+  if (/庐山|题西林/.test(text)) return "mountain_mist";
+  if (/田园|村居|乡村|农家|池上|小池/.test(text)) return "village";
+  if (/出塞|边塞|凉州词|大漠|弓刀/.test(text)) return "frontier";
+  if (/送别|送|别|离|归|回乡/.test(text)) return "farewell";
+  if (/瀑布|天门山|长江|孤帆/.test(text)) return "river_sail";
+  if (/游子吟|慈母/.test(text)) return "mother_sewing";
+  if (/梅|雪|寒|冬|冰/.test(text)) return "winter_plum";
+  if (/柳|春|花|燕|莺|桃|雨|草/.test(text)) return "spring";
+  if (/荷|莲|蝉|蛙|夏/.test(text)) return "summer";
+  if (/枫|秋|菊|落叶/.test(text)) return "autumn";
+  if (/山|岭|峰|岳/.test(text)) return "mountain";
+  if (/江|河|湖|海|潭|溪|泉|波/.test(text)) return "water";
+  if (/月|夜|星/.test(text)) return "moon_night";
+  if (/雪|霜/.test(text)) return "winter_plum";
+  return "default";
+}
+
+const SCENE_PAINTERS = {
+  goose(ctx, w, h, t) {
+    // Water with lotus and a white goose
+    const grad = ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#87CEEB');grad.addColorStop(0.4,'#B8E6F0');grad.addColorStop(1,'#4A90A4');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Water ripples
+    for(let i=0;i<6;i++){
+      ctx.strokeStyle=`rgba(255,255,255,${0.08+i*0.02})`;ctx.lineWidth=1.5;ctx.beginPath();
+      for(let x=0;x<w;x+=3){const y=h*0.55+i*12+Math.sin(x*0.008+t*0.0008+i)*8;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+      ctx.stroke();
+    }
+    // Goose body
+    const gx=w*0.45+Math.sin(t*0.0005)*15,gy=h*0.48+Math.sin(t*0.001)*5;
+    ctx.save();ctx.translate(gx,gy);
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.ellipse(0,0,45,28,0,0,Math.PI*2);ctx.fill();
+    // Neck
+    ctx.strokeStyle='#fff';ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(-30,-5);ctx.quadraticCurveTo(-45,-40,-35,-55);ctx.stroke();
+    // Head
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(-35,-58,12,0,Math.PI*2);ctx.fill();
+    // Beak
+    ctx.fillStyle='#FF8C00';ctx.beginPath();ctx.moveTo(-48,-60);ctx.lineTo(-58,-57);ctx.lineTo(-48,-54);ctx.fill();
+    // Eye
+    ctx.fillStyle='#000';ctx.beginPath();ctx.arc(-38,-60,2,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+    // Lotus leaves
+    for(let i=0;i<4;i++){
+      const lx=w*(0.15+i*0.22),ly=h*0.65+Math.sin(i*2)*10;
+      ctx.fillStyle='rgba(45,106,79,0.5)';ctx.beginPath();
+      ctx.ellipse(lx,ly,30+Math.sin(t*0.001+i)*5,15,0.1*i,0,Math.PI*2);ctx.fill();
+    }
+    // Lotus flower
+    ctx.fillStyle='rgba(255,107,107,0.7)';
+    for(let i=0;i<6;i++){
+      const a=i*Math.PI/3+Math.sin(t*0.001)*0.1;
+      ctx.beginPath();ctx.ellipse(w*0.3+Math.cos(a)*12,h*0.6+Math.sin(a)*8,14,7,a,0,Math.PI*2);ctx.fill();
+    }
+  },
+  lotus(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#E8F5E9');grad.addColorStop(0.5,'#81C784');grad.addColorStop(1,'#2E7D32');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Water
+    ctx.fillStyle='rgba(100,181,246,0.3)';ctx.fillRect(0,h*0.5,w,h*0.5);
+    // Big lotus leaves
+    for(let i=0;i<5;i++){
+      const lx=w*(0.1+i*0.2),ly=h*0.55+Math.sin(i*1.5)*15;
+      ctx.fillStyle=`rgba(46,125,50,${0.4+Math.sin(i)*0.1})`;
+      ctx.beginPath();ctx.ellipse(lx,ly,50+Math.sin(t*0.0008+i)*8,25,0.2*i,0,Math.PI*2);ctx.fill();
+    }
+    // Lotus flowers
+    for(let i=0;i<3;i++){
+      const fx=w*(0.2+i*0.3),fy=h*0.4+Math.sin(i*2)*20;
+      for(let p=0;p<7;p++){
+        const a=p*Math.PI*2/7+Math.sin(t*0.001)*0.15;
+        ctx.fillStyle=i===1?'rgba(255,82,82,0.6)':'rgba(255,183,197,0.6)';
+        ctx.beginPath();ctx.ellipse(fx+Math.cos(a)*15,fy+Math.sin(a)*10,18,8,a,0,Math.PI*2);ctx.fill();
+      }
+      ctx.fillStyle='#FFD54F';ctx.beginPath();ctx.arc(fx,fy,6,0,Math.PI*2);ctx.fill();
+    }
+    // Fish
+    for(let i=0;i<3;i++){
+      const fx2=w*(0.25+i*0.25)+Math.sin(t*0.001+i*2)*30;
+      const fy2=h*0.7+Math.cos(t*0.0008+i)*10;
+      ctx.fillStyle=i%2===0?'#FF7043':'#FFB74D';
+      ctx.beginPath();ctx.ellipse(fx2,fy2,10,5,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.moveTo(fx2+10,fy2);ctx.lineTo(fx2+18,fy2-5);ctx.lineTo(fx2+18,fy2+5);ctx.fill();
+    }
+  },
+  waterfall(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#546E7A');grad.addColorStop(0.3,'#78909C');grad.addColorStop(1,'#B0BEC5');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Mountain cliffs
+    ctx.fillStyle='#455A64';
+    ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(w*0.3,0);ctx.lineTo(w*0.35,h*0.2);
+    ctx.lineTo(w*0.3,h*0.7);ctx.lineTo(0,h);ctx.fill();
+    ctx.beginPath();ctx.moveTo(w,0);ctx.lineTo(w*0.7,0);ctx.lineTo(w*0.65,h*0.2);
+    ctx.lineTo(w*0.7,h*0.7);ctx.lineTo(w,h);ctx.fill();
+    // Waterfall
+    for(let i=0;i<8;i++){
+      const x=w*0.48+i*4;
+      ctx.strokeStyle=`rgba(255,255,255,${0.3+Math.sin(t*0.003+i)*0.15})`;
+      ctx.lineWidth=2+Math.sin(i)*1;
+      ctx.beginPath();ctx.moveTo(x,h*0.15);
+      ctx.bezierCurveTo(x+Math.sin(t*0.002+i)*10,h*0.35,x-Math.sin(t*0.002+i)*8,h*0.55,x+Math.sin(t*0.001)*5,h*0.8);
+      ctx.stroke();
+    }
+    // Mist
+    for(let i=0;i<6;i++){
+      ctx.fillStyle=`rgba(255,255,255,${0.05+Math.sin(t*0.001+i)*0.03})`;
+      ctx.beginPath();ctx.ellipse(w*0.5+Math.sin(t*0.0005+i*2)*40,h*(0.3+i*0.08),60,15,0,0,Math.PI*2);ctx.fill();
+    }
+    // Pool at bottom
+    ctx.fillStyle='rgba(100,181,246,0.4)';
+    ctx.beginPath();ctx.ellipse(w*0.5,h*0.85,w*0.3,20,0,0,Math.PI*2);ctx.fill();
+  },
+  autumn_maple(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#FFE0B2');grad.addColorStop(0.5,'#FFCC80');grad.addColorStop(1,'#E65100');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Path
+    ctx.fillStyle='rgba(139,69,19,0.3)';
+    ctx.beginPath();ctx.moveTo(0,h*0.85);ctx.quadraticCurveTo(w*0.3,h*0.75,w*0.5,h*0.8);
+    ctx.quadraticCurveTo(w*0.7,h*0.85,w,h*0.78);ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.fill();
+    // Maple trees
+    for(let i=0;i<4;i++){
+      const tx=w*(0.15+i*0.25),ty=h*0.5+Math.sin(i)*20;
+      ctx.fillStyle='#5D4037';ctx.fillRect(tx-4,ty,8,h*0.35);
+      const colors=['#D32F2F','#FF5722','#FF7043','#E64A19'];
+      for(let j=0;j<3;j++){
+        ctx.fillStyle=colors[j]+'BB';
+        ctx.beginPath();ctx.arc(tx+Math.sin(j*2)*10,ty-15-j*15,22-j*3+Math.sin(t*0.001+i+j)*3,0,Math.PI*2);ctx.fill();
+      }
+    }
+    // Falling leaves
+    for(let i=0;i<15;i++){
+      const lx=(w*0.1+(w*0.8*Math.sin(i*2.1+t*0.0003)))%w;
+      const ly=(h*0.05+(h*0.9*(i/15)+t*0.018*(0.4+0.6*Math.sin(i)))%h);
+      ctx.save();ctx.translate(lx,ly);ctx.rotate(i*0.7+t*0.0015);
+      ctx.fillStyle=['#D32F2F','#FF5722','#FFC107'][i%3]+'99';
+      ctx.beginPath();ctx.moveTo(0,-5);ctx.bezierCurveTo(5,-3,5,3,0,5);ctx.bezierCurveTo(-5,3,-5,-3,0,-5);ctx.fill();
+      ctx.restore();
+    }
+  },
+  winter_river(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#CFD8DC');grad.addColorStop(0.5,'#B0BEC5');grad.addColorStop(1,'#78909C');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Snowy mountains
+    ctx.fillStyle='rgba(236,239,241,0.7)';
+    ctx.beginPath();ctx.moveTo(0,h*0.5);ctx.lineTo(w*0.15,h*0.2);ctx.lineTo(w*0.3,h*0.35);
+    ctx.lineTo(w*0.5,h*0.15);ctx.lineTo(w*0.7,h*0.3);ctx.lineTo(w*0.85,h*0.18);
+    ctx.lineTo(w,h*0.4);ctx.lineTo(w,h*0.6);ctx.lineTo(0,h*0.6);ctx.fill();
+    // Frozen river
+    ctx.fillStyle='rgba(176,190,197,0.5)';ctx.fillRect(0,h*0.6,w,h*0.4);
+    // Small boat
+    const bx=w*0.5+Math.sin(t*0.0003)*10,by=h*0.68;
+    ctx.fillStyle='#5D4037';
+    ctx.beginPath();ctx.moveTo(bx-25,by);ctx.quadraticCurveTo(bx,by+10,bx+25,by);ctx.fill();
+    // Figure on boat (fisherman)
+    ctx.fillStyle='#37474F';
+    ctx.beginPath();ctx.arc(bx,by-15,5,0,Math.PI*2);ctx.fill();
+    ctx.fillRect(bx-3,by-10,6,15);
+    // Fishing line
+    ctx.strokeStyle='rgba(200,200,200,0.6)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(bx+5,by-5);ctx.lineTo(bx+30,by+30);ctx.stroke();
+    // Snowflakes
+    for(let i=0;i<30;i++){
+      const sx=(w*0.05+(w*0.9*Math.sin(i*2.7+t*0.00008)))%w;
+      const sy=(h*0.05+(h*0.9*(i/30)+t*0.012*(0.3+0.7*Math.sin(i*0.5)))%h);
+      ctx.fillStyle=`rgba(255,255,255,${0.5+0.3*Math.sin(i)})`;
+      ctx.beginPath();ctx.arc(sx,sy,2+Math.sin(i)*1.5,0,Math.PI*2);ctx.fill();
+    }
+  },
+  rain_village(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#78909C');grad.addColorStop(0.5,'#90A4AE');grad.addColorStop(1,'#A5D6A7');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Rain
+    ctx.strokeStyle='rgba(200,230,255,0.3)';ctx.lineWidth=1;
+    for(let i=0;i<40;i++){
+      const rx=(i*w/20+t*0.02)%w;
+      const ry=(i*h/30+t*0.15)%h;
+      ctx.beginPath();ctx.moveTo(rx,ry);ctx.lineTo(rx-3,ry+15);ctx.stroke();
+    }
+    // Village houses
+    for(let i=0;i<3;i++){
+      const hx=w*(0.2+i*0.3),hy=h*0.55;
+      ctx.fillStyle='#8D6E63';ctx.fillRect(hx-20,hy,40,25);
+      ctx.fillStyle='#D84315';
+      ctx.beginPath();ctx.moveTo(hx-25,hy);ctx.lineTo(hx,hy-20);ctx.lineTo(hx+25,hy);ctx.fill();
+      // Window light
+      ctx.fillStyle='rgba(255,183,77,0.6)';ctx.fillRect(hx-5,hy+5,10,10);
+    }
+    // Apricot blossom trees
+    for(let i=0;i<2;i++){
+      const tx=w*(0.35+i*0.3),ty=h*0.45;
+      ctx.fillStyle='#5D4037';ctx.fillRect(tx-3,ty,6,h*0.15);
+      for(let j=0;j<5;j++){
+        ctx.fillStyle='rgba(255,183,197,0.6)';
+        ctx.beginPath();ctx.arc(tx+Math.sin(j*1.3)*15,ty-8-j*5,6,0,Math.PI*2);ctx.fill();
+      }
+    }
+  },
+  tower(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#FFB74D');grad.addColorStop(0.4,'#FF8A65');grad.addColorStop(1,'#8D6E63');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Sun setting
+    ctx.fillStyle='rgba(255,183,77,0.8)';ctx.beginPath();ctx.arc(w*0.3,h*0.3,50,0,Math.PI*2);ctx.fill();
+    // River (Yellow River)
+    ctx.fillStyle='rgba(255,183,77,0.3)';
+    ctx.beginPath();ctx.moveTo(0,h*0.7);
+    for(let x=0;x<w;x+=5){ctx.lineTo(x,h*0.7+Math.sin(x*0.01+t*0.0005)*10);}
+    ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.fill();
+    // Tower
+    const tx=w*0.65,ty=h*0.3;
+    ctx.fillStyle='#5D4037';
+    for(let i=0;i<3;i++){
+      ctx.fillRect(tx-20+i*5,ty+i*22,40-i*10,20);
+      ctx.fillStyle='#D84315';
+      ctx.beginPath();ctx.moveTo(tx-25+i*5,ty+i*22);ctx.lineTo(tx,ty+i*22-12);ctx.lineTo(tx+25-i*5,ty+i*22);ctx.fill();
+      ctx.fillStyle='#5D4037';
+    }
+    // Mountains in distance
+    ctx.fillStyle='rgba(121,85,72,0.4)';
+    ctx.beginPath();ctx.moveTo(0,h*0.65);ctx.lineTo(w*0.2,h*0.4);ctx.lineTo(w*0.4,h*0.55);
+    ctx.lineTo(w*0.6,h*0.38);ctx.lineTo(w*0.8,h*0.5);ctx.lineTo(w,h*0.45);ctx.lineTo(w,h*0.65);ctx.fill();
+  },
+  willow(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#C8E6C9');grad.addColorStop(0.5,'#81C784');grad.addColorStop(1,'#4CAF50');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Willow tree
+    const tx=w*0.5,ty=h*0.25;
+    ctx.fillStyle='#6D4C41';ctx.fillRect(tx-8,ty,16,h*0.4);
+    // Branches
+    for(let i=0;i<12;i++){
+      const angle=-Math.PI*0.8+i*Math.PI*0.15;
+      const len=80+Math.sin(i)*20;
+      const ex=tx+Math.cos(angle)*len;
+      const ey=ty+Math.sin(angle)*len+20;
+      ctx.strokeStyle='#5D4037';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(tx,ty);ctx.quadraticCurveTo(tx+Math.cos(angle)*len*0.5,ty+10,ex,ey);ctx.stroke();
+      // Drooping leaves
+      for(let j=0;j<5;j++){
+        const lx=tx+Math.cos(angle)*len*(0.4+j*0.12);
+        const ly=ty+Math.sin(angle)*len*(0.3+j*0.14)+j*12+Math.sin(t*0.001+i+j)*5;
+        ctx.strokeStyle='#4CAF50';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(lx,ly);ctx.quadraticCurveTo(lx+5,ly+15,lx-2,ly+25);ctx.stroke();
+      }
+    }
+    // Breeze effect - leaves
+    for(let i=0;i<8;i++){
+      const lx=w*0.3+Math.sin(t*0.0008+i)*w*0.3;
+      const ly=h*0.4+Math.cos(t*0.0006+i*2)*h*0.15+i*5;
+      ctx.fillStyle='rgba(76,175,80,0.4)';
+      ctx.beginPath();ctx.ellipse(lx,ly,4,8,t*0.001+i,0,Math.PI*2);ctx.fill();
+    }
+  },
+  grassland(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#87CEEB');grad.addColorStop(0.35,'#B3E5FC');grad.addColorStop(0.4,'#A5D6A7');grad.addColorStop(1,'#388E3C');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Mountains in background
+    ctx.fillStyle='rgba(129,199,132,0.5)';
+    ctx.beginPath();ctx.moveTo(0,h*0.4);ctx.lineTo(w*0.15,h*0.2);ctx.lineTo(w*0.35,h*0.35);
+    ctx.lineTo(w*0.5,h*0.15);ctx.lineTo(w*0.65,h*0.3);ctx.lineTo(w*0.85,h*0.18);
+    ctx.lineTo(w,h*0.35);ctx.lineTo(w,h*0.45);ctx.lineTo(0,h*0.45);ctx.fill();
+    // Grass
+    for(let i=0;i<60;i++){
+      const gx=i*w/60,gy=h*0.6+Math.sin(i*0.5)*20;
+      const gh=15+Math.sin(i*1.2)*8;
+      const sway=Math.sin(t*0.0015+i*0.3)*5;
+      ctx.strokeStyle=`rgba(56,142,60,${0.4+Math.sin(i)*0.2})`;ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(gx,gy);ctx.quadraticCurveTo(gx+sway,gy-gh*0.6,gx+sway*1.2,gy-gh);ctx.stroke();
+    }
+    // Wind effect - grass bending
+    for(let i=0;i<20;i++){
+      const gx=w*0.1+i*w*0.045,gy=h*0.65;
+      const bend=Math.sin(t*0.002+i*0.4)*15+10;
+      ctx.strokeStyle='rgba(46,125,50,0.3)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(gx,gy);ctx.quadraticCurveTo(gx+bend*0.5,gy-20,gx+bend,gy-35);ctx.stroke();
+    }
+    // Cattle silhouettes
+    for(let i=0;i<3;i++){
+      const cx=w*(0.3+i*0.2)+Math.sin(t*0.0003+i)*10;
+      const cy=h*0.58+Math.sin(i*2)*5;
+      ctx.fillStyle='rgba(62,39,35,0.5)';
+      ctx.beginPath();ctx.ellipse(cx,cy,18,10,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(cx-12,cy-8,6,0,Math.PI*2);ctx.fill();
+    }
+  },
+  moon_night(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#0D1B2A');grad.addColorStop(0.5,'#1B2838');grad.addColorStop(1,'#1A237E');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Stars
+    for(let i=0;i<40;i++){
+      const sx=i*w/40+Math.sin(i*3)*15;
+      const sy=h*0.05+Math.cos(i*2.1)*h*0.35;
+      const brightness=0.3+0.4*Math.sin(t*0.002+i*0.7);
+      ctx.fillStyle=`rgba(255,255,220,${brightness})`;
+      ctx.beginPath();ctx.arc(sx,sy,1+Math.sin(i)*0.5,0,Math.PI*2);ctx.fill();
+    }
+    // Moon
+    const mx=w*0.72,my=h*0.2;
+    ctx.fillStyle='rgba(255,249,196,0.15)';ctx.beginPath();ctx.arc(mx,my,60,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#FFF9C4';ctx.beginPath();ctx.arc(mx,my,35,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#0D1B2A';ctx.beginPath();ctx.arc(mx-10,my-8,30,0,Math.PI*2);ctx.fill();
+    // Moonlight on ground
+    ctx.fillStyle='rgba(255,249,196,0.05)';
+    ctx.beginPath();ctx.ellipse(w*0.5,h*0.85,w*0.4,30,0,0,Math.PI*2);ctx.fill();
+    // Ground
+    ctx.fillStyle='rgba(27,38,48,0.5)';ctx.fillRect(0,h*0.75,w,h*0.25);
+    // Small house silhouette
+    const hx=w*0.15,hy=h*0.68;
+    ctx.fillStyle='#1A1A2E';
+    ctx.fillRect(hx,hy,40,25);ctx.beginPath();ctx.moveTo(hx-5,hy);ctx.lineTo(hx+20,hy-15);ctx.lineTo(hx+45,hy);ctx.fill();
+    // Window glow
+    ctx.fillStyle='rgba(255,183,77,0.4)';ctx.fillRect(hx+15,hy+8,10,10);
+  },
+  bamboo(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#E8F5E9');grad.addColorStop(1,'#A5D6A7');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    for(let i=0;i<8;i++){
+      const bx=w*(0.08+i*0.13);
+      ctx.fillStyle='#558B2F';ctx.fillRect(bx-3,0,6,h);
+      // Nodes
+      for(let j=0;j<5;j++){
+        ctx.fillStyle='#689F38';ctx.fillRect(bx-5,h*(0.15+j*0.18),10,4);
+      }
+      // Leaves
+      for(let j=0;j<4;j++){
+        const ly=h*(0.2+j*0.2);
+        const sway=Math.sin(t*0.001+i+j)*8;
+        ctx.fillStyle='rgba(76,175,80,0.6)';
+        ctx.beginPath();ctx.moveTo(bx+3,ly);
+        ctx.quadraticCurveTo(bx+25+sway,ly-5,bx+40+sway,ly+3);
+        ctx.quadraticCurveTo(bx+25+sway,ly+5,bx+3,ly);ctx.fill();
+        ctx.beginPath();ctx.moveTo(bx-3,ly+10);
+        ctx.quadraticCurveTo(bx-25+sway,ly+5,bx-38+sway,ly+13);
+        ctx.quadraticCurveTo(bx-25+sway,ly+15,bx-3,ly+10);ctx.fill();
+      }
+    }
+  },
+  spring_morning(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#B3E5FC');grad.addColorStop(0.4,'#C8E6C9');grad.addColorStop(1,'#81C784');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Sun
+    ctx.fillStyle='rgba(255,235,59,0.6)';ctx.beginPath();ctx.arc(w*0.8,h*0.15,40,0,Math.PI*2);ctx.fill();
+    // Flowering trees
+    for(let i=0;i<3;i++){
+      const tx=w*(0.2+i*0.3),ty=h*0.5;
+      ctx.fillStyle='#6D4C41';ctx.fillRect(tx-5,ty,10,h*0.3);
+      for(let j=0;j<8;j++){
+        const a=j*Math.PI/4;
+        ctx.fillStyle=['rgba(255,183,197,0.6)','rgba(255,224,130,0.6)'][j%2];
+        ctx.beginPath();ctx.arc(tx+Math.cos(a)*20,ty-10+Math.sin(a)*15,8,0,Math.PI*2);ctx.fill();
+      }
+    }
+    // Birds
+    for(let i=0;i<4;i++){
+      const bx=w*(0.2+i*0.2)+Math.sin(t*0.001+i)*20;
+      const by=h*(0.15+i*0.05)+Math.cos(t*0.0008+i)*8;
+      ctx.strokeStyle='#333';ctx.lineWidth=2;
+      ctx.beginPath();
+      ctx.moveTo(bx-8,by+3);ctx.quadraticCurveTo(bx-3,by-5,bx,by);ctx.quadraticCurveTo(bx+3,by-5,bx+8,by+3);
+      ctx.stroke();
+    }
+    // Grass
+    for(let i=0;i<30;i++){
+      const gx=i*w/30,gy=h*0.75;
+      ctx.strokeStyle='rgba(76,175,80,0.4)';ctx.lineWidth=1;
+      const sway=Math.sin(t*0.001+i*0.5)*3;
+      ctx.beginPath();ctx.moveTo(gx,gy);ctx.quadraticCurveTo(gx+sway,gy-10,gx+sway*1.5,gy-18);ctx.stroke();
+    }
+  },
+  yellow_river(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#FFE082');grad.addColorStop(0.4,'#FFB74D');grad.addColorStop(1,'#E65100');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Mountains
+    ctx.fillStyle='rgba(161,136,127,0.5)';
+    ctx.beginPath();ctx.moveTo(0,h*0.5);ctx.lineTo(w*0.2,h*0.2);ctx.lineTo(w*0.4,h*0.4);
+    ctx.lineTo(w*0.6,h*0.18);ctx.lineTo(w*0.8,h*0.35);ctx.lineTo(w,h*0.25);ctx.lineTo(w,h*0.5);ctx.fill();
+    // River
+    for(let i=0;i<8;i++){
+      ctx.strokeStyle=`rgba(255,183,77,${0.2+i*0.04})`;ctx.lineWidth=3;
+      ctx.beginPath();
+      for(let x=0;x<w;x+=4){
+        const y=h*0.55+i*10+Math.sin(x*0.006+t*0.001+i)*12;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    }
+  },
+  west_lake(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#B3E5FC');grad.addColorStop(0.3,'#81D4FA');grad.addColorStop(0.5,'#4DB6AC');grad.addColorStop(1,'#00897B');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Lotus leaves (lots of them, stretching to horizon)
+    for(let i=0;i<8;i++){
+      for(let j=0;j<3;j++){
+        const lx=w*(0.05+i*0.12+j*0.03);
+        const ly=h*(0.35+i*0.06+j*0.02);
+        const s=18+i*3;
+        ctx.fillStyle=`rgba(46,125,50,${0.3+i*0.05})`;
+        ctx.beginPath();ctx.ellipse(lx,ly,s,s*0.5,0.1*j,0,Math.PI*2);ctx.fill();
+      }
+    }
+    // Lotus flowers
+    for(let i=0;i<4;i++){
+      const fx=w*(0.15+i*0.22),fy=h*(0.3+i*0.08);
+      for(let p=0;p<6;p++){
+        const a=p*Math.PI/3+Math.sin(t*0.0008)*0.1;
+        ctx.fillStyle='rgba(255,82,82,0.5)';
+        ctx.beginPath();ctx.ellipse(fx+Math.cos(a)*10,fy+Math.sin(a)*7,12,6,a,0,Math.PI*2);ctx.fill();
+      }
+    }
+    // Bridge silhouette
+    ctx.strokeStyle='rgba(93,64,55,0.4)';ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(w*0.3,h*0.28);ctx.quadraticCurveTo(w*0.5,h*0.2,w*0.7,h*0.28);ctx.stroke();
+  },
+  mountain_mist(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#E0E0E0');grad.addColorStop(0.5,'#BDBDBD');grad.addColorStop(1,'#A5D6A7');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Layered mountains with mist
+    for(let i=0;i<4;i++){
+      const y=h*(0.2+i*0.12);
+      ctx.fillStyle=`rgba(${100+i*30},${120+i*25},${100+i*20},${0.3+i*0.1})`;
+      ctx.beginPath();ctx.moveTo(0,y+20);
+      for(let x=0;x<w;x+=20){
+        ctx.lineTo(x,y+Math.sin(x*0.008+i*2)*20+Math.cos(x*0.012+i)*10);
+      }
+      ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.fill();
+    }
+    // Mist bands
+    for(let i=0;i<4;i++){
+      const my=h*(0.3+i*0.12);
+      const mx=Math.sin(t*0.0003+i)*30;
+      ctx.fillStyle=`rgba(255,255,255,${0.15+Math.sin(t*0.001+i)*0.05})`;
+      ctx.beginPath();ctx.ellipse(w*0.5+mx,my,w*0.5,12,0,0,Math.PI*2);ctx.fill();
+    }
+  },
+  village(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#C8E6C9');grad.addColorStop(0.5,'#A5D6A7');grad.addColorStop(1,'#66BB6A');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Rice paddies
+    for(let i=0;i<4;i++){
+      ctx.fillStyle=`rgba(102,187,106,${0.3+i*0.08})`;
+      ctx.fillRect(0,h*(0.5+i*0.12),w,h*0.1);
+      // Water reflection
+      ctx.fillStyle='rgba(129,212,250,0.15)';ctx.fillRect(0,h*(0.5+i*0.12),w,h*0.05);
+    }
+    // Small houses
+    for(let i=0;i<2;i++){
+      const hx=w*(0.25+i*0.4),hy=h*0.42;
+      ctx.fillStyle='#8D6E63';ctx.fillRect(hx-18,hy,36,20);
+      ctx.fillStyle='#D84315';
+      ctx.beginPath();ctx.moveTo(hx-22,hy);ctx.lineTo(hx,hy-14);ctx.lineTo(hx+22,hy);ctx.fill();
+    }
+    // Bamboo
+    for(let i=0;i<3;i++){
+      const bx=w*(0.1+i*0.35);
+      ctx.fillStyle='rgba(85,139,47,0.6)';ctx.fillRect(bx-2,h*0.2,4,h*0.3);
+    }
+    // Dragonflies
+    for(let i=0;i<3;i++){
+      const dx=w*(0.3+i*0.2)+Math.sin(t*0.001+i)*20;
+      const dy=h*0.5+Math.cos(t*0.0008+i)*15;
+      ctx.fillStyle='rgba(33,150,243,0.5)';
+      ctx.beginPath();ctx.ellipse(dx-5,dy,8,2,t*0.002+i,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.ellipse(dx+5,dy,8,2,-t*0.002+i,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(0,0,0,0.4)';ctx.beginPath();ctx.arc(dx,dy,2,0,Math.PI*2);ctx.fill();
+    }
+  },
+  frontier(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#FFCC80');grad.addColorStop(0.4,'#FFB74D');grad.addColorStop(1,'#8D6E63');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Desert dunes
+    for(let i=0;i<3;i++){
+      ctx.fillStyle=`rgba(${180+i*20},${140+i*15},${80+i*10},0.5)`;
+      ctx.beginPath();ctx.moveTo(0,h*(0.5+i*0.15));
+      for(let x=0;x<w;x+=10){ctx.lineTo(x,h*(0.5+i*0.15)+Math.sin(x*0.005+i)*20);}
+      ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.fill();
+    }
+    // Watchtower
+    const tx=w*0.7,ty=h*0.25;
+    ctx.fillStyle='#5D4037';ctx.fillRect(tx-12,ty,24,h*0.25);
+    ctx.fillStyle='#D84315';
+    ctx.beginPath();ctx.moveTo(tx-18,ty);ctx.lineTo(tx,ty-15);ctx.lineTo(tx+18,ty);ctx.fill();
+    // Flag
+    ctx.strokeStyle='#D32F2F';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(tx,ty-15);ctx.lineTo(tx,ty-35);ctx.stroke();
+    ctx.fillStyle='rgba(211,47,47,0.7)';
+    ctx.beginPath();ctx.moveTo(tx,ty-35);ctx.lineTo(tx+15+Math.sin(t*0.002)*3,ty-30);ctx.lineTo(tx,ty-25);ctx.fill();
+    // Wild geese
+    for(let i=0;i<5;i++){
+      const gx=w*(0.1+i*0.15)+Math.sin(t*0.0005+i)*15;
+      const gy=h*(0.1+i*0.03)+Math.cos(t*0.0004+i)*5;
+      ctx.strokeStyle='#333';ctx.lineWidth=1.5;
+      ctx.beginPath();
+      ctx.moveTo(gx-6,gy+2);ctx.quadraticCurveTo(gx-2,gy-4,gx,gy);ctx.quadraticCurveTo(gx+2,gy-4,gx+6,gy+2);
+      ctx.stroke();
+    }
+  },
+  farewell(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#B3E5FC');grad.addColorStop(0.5,'#81D4FA');grad.addColorStop(1,'#4FC3F7');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Willows (common farewell symbol)
+    for(let i=0;i<2;i++){
+      const tx=w*(0.2+i*0.6);
+      ctx.fillStyle='#6D4C41';ctx.fillRect(tx-4,h*0.3,8,h*0.4);
+      for(let j=0;j<8;j++){
+        const angle=-Math.PI*0.7+j*Math.PI*0.12;
+        const len=60+j*5;
+        ctx.strokeStyle='#558B2F';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(tx,h*0.3);
+        ctx.quadraticCurveTo(tx+Math.cos(angle)*len*0.6,h*0.3+10,tx+Math.cos(angle)*len,h*0.3+Math.sin(angle)*len+20+Math.sin(t*0.001+i+j)*5);
+        ctx.stroke();
+      }
+    }
+    // River
+    ctx.fillStyle='rgba(79,195,247,0.3)';
+    for(let i=0;i<4;i++){
+      ctx.strokeStyle=`rgba(255,255,255,${0.1+i*0.03})`;ctx.lineWidth=1;
+      ctx.beginPath();
+      for(let x=0;x<w;x+=3){const y=h*0.7+i*8+Math.sin(x*0.008+t*0.0008+i)*6;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+      ctx.stroke();
+    }
+    // Boat
+    const bx=w*0.5+Math.sin(t*0.0004)*20;
+    ctx.fillStyle='#5D4037';
+    ctx.beginPath();ctx.moveTo(bx-20,h*0.72);ctx.quadraticCurveTo(bx,h*0.76,bx+20,h*0.72);ctx.fill();
+  },
+  river_sail(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#B3E5FC');grad.addColorStop(0.3,'#81D4FA');grad.addColorStop(0.6,'#4FC3F7');grad.addColorStop(1,'#0288D1');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Mountains
+    ctx.fillStyle='rgba(76,175,80,0.4)';
+    ctx.beginPath();ctx.moveTo(0,h*0.5);ctx.lineTo(w*0.2,h*0.25);ctx.lineTo(w*0.4,h*0.4);
+    ctx.lineTo(w*0.6,h*0.2);ctx.lineTo(w*0.8,h*0.35);ctx.lineTo(w,h*0.3);ctx.lineTo(w,h*0.5);ctx.fill();
+    // River
+    for(let i=0;i<6;i++){
+      ctx.strokeStyle=`rgba(255,255,255,${0.08+i*0.02})`;ctx.lineWidth=1.5;
+      ctx.beginPath();
+      for(let x=0;x<w;x+=3){const y=h*0.6+i*10+Math.sin(x*0.007+t*0.0008+i)*8;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+      ctx.stroke();
+    }
+    // Sailboat
+    const sx=w*0.55+Math.sin(t*0.0003)*15,sy=h*0.58;
+    ctx.fillStyle='#5D4037';
+    ctx.beginPath();ctx.moveTo(sx-20,sy);ctx.quadraticCurveTo(sx,sy+8,sx+20,sy);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.8)';
+    ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(sx,sy-35);ctx.lineTo(sx+18,sy-5);ctx.fill();
+  },
+  mother_sewing(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#FFF3E0');grad.addColorStop(1,'#FFE0B2');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Interior room
+    ctx.fillStyle='rgba(188,170,146,0.3)';ctx.fillRect(0,0,w,h);
+    // Window with moonlight
+    ctx.fillStyle='rgba(255,249,196,0.4)';ctx.fillRect(w*0.6,h*0.1,w*0.2,h*0.25);
+    ctx.strokeStyle='#8D6E63';ctx.lineWidth=3;ctx.strokeRect(w*0.6,h*0.1,w*0.2,h*0.25);
+    // Thread and needle
+    ctx.strokeStyle='#E53935';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(w*0.35,h*0.5);ctx.bezierCurveTo(w*0.4,h*0.55,w*0.45,h*0.45,w*0.5,h*0.5);ctx.stroke();
+    // Small glowing lamp
+    ctx.fillStyle='rgba(255,183,77,0.4)';ctx.beginPath();ctx.arc(w*0.3,h*0.4,25,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#FFB74D';ctx.beginPath();ctx.arc(w*0.3,h*0.4,8,0,Math.PI*2);ctx.fill();
+  },
+  winter_plum(ctx, w, h, t) {
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#ECEFF1');grad.addColorStop(0.5,'#CFD8DC');grad.addColorStop(1,'#B0BEC5');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+    // Snow ground
+    ctx.fillStyle='rgba(255,255,255,0.6)';ctx.fillRect(0,h*0.7,w,h*0.3);
+    // Plum tree
+    const tx=w*0.4,ty=h*0.35;
+    ctx.fillStyle='#5D4037';
+    ctx.beginPath();ctx.moveTo(tx,h*0.8);ctx.quadraticCurveTo(tx-20,ty+20,tx-10,ty);ctx.stroke();
+    ctx.fillRect(tx-5,ty,10,h*0.45);
+    // Branches
+    for(let i=0;i<5;i++){
+      const angle=-Math.PI*0.3+i*Math.PI*0.2;
+      ctx.strokeStyle='#5D4037';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(tx,ty);
+      ctx.lineTo(tx+Math.cos(angle)*50,ty+Math.sin(angle)*30);ctx.stroke();
+      // Plum blossoms
+      for(let j=0;j<4;j++){
+        const bx=tx+Math.cos(angle)*(15+j*10);
+        const by=ty+Math.sin(angle)*(10+j*7);
+        ctx.fillStyle='rgba(255,105,135,0.6)';
+        for(let p=0;p<5;p++){
+          const a=p*Math.PI*2/5;
+          ctx.beginPath();ctx.ellipse(bx+Math.cos(a)*5,by+Math.sin(a)*5,5,3,a,0,Math.PI*2);ctx.fill();
+        }
+        ctx.fillStyle='#FFD54F';ctx.beginPath();ctx.arc(bx,by,2,0,Math.PI*2);ctx.fill();
+      }
+    }
+    // Snowflakes
+    for(let i=0;i<25;i++){
+      const sx=(w*0.05+(w*0.9*Math.sin(i*3.1+t*0.00007)))%w;
+      const sy=(h*0.05+(h*0.9*(i/25)+t*0.01*(0.3+0.7*Math.sin(i*0.6)))%h);
+      ctx.fillStyle=`rgba(255,255,255,${0.5+0.3*Math.sin(i)})`;
+      ctx.beginPath();ctx.arc(sx,sy,2+Math.sin(i),0,Math.PI*2);ctx.fill();
+    }
+  }
+};
+
+// Fallback painters reuse specific ones
+SCENE_PAINTERS.summer = SCENE_PAINTERS.lotus;
+SCENE_PAINTERS.autumn = SCENE_PAINTERS.autumn_maple;
+SCENE_PAINTERS.mountain = SCENE_PAINTERS.mountain_mist;
+SCENE_PAINTERS.water = SCENE_PAINTERS.yellow_river;
+SCENE_PAINTERS.default = SCENE_PAINTERS.spring;
+
+function drawScene(canvas, title, content, isDetail) {
+  const w = canvas.width = canvas.parentElement.clientWidth * 2;
+  const h = canvas.height = canvas.parentElement.clientHeight * 2;
+  const ctx = canvas.getContext('2d');
+  const scene = detectScene(title, content);
+  const t = Date.now();
+
+  if (SCENE_PAINTERS[scene]) {
+    SCENE_PAINTERS[scene](ctx, w, h, t);
+  } else {
+    // Fallback gradient
+    const grad = ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,'#87CEEB');grad.addColorStop(1,'#98FB98');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+  }
+}
+
+function animateScene(canvas, title, content) {
+  let running = true;
+  function loop() {
+    if (!running || !canvas.parentElement) return;
+    drawScene(canvas, title, content, true);
+    requestAnimationFrame(loop);
+  }
+  loop();
+  return () => { running = false; };
+}
+
+// === CARD RENDERING ===
+const grid = document.getElementById('poemGrid');
+const detailView = document.getElementById('detailView');
+const statsBar = document.getElementById('statsBar');
+const searchInput = document.getElementById('searchInput');
+let currentFilter = 'all';
+let currentStudyMode = false;
+let stopAnimations = [];
+
+function renderCards(poems) {
+  stopAnimations.forEach(fn => fn());
+  stopAnimations = [];
+  grid.innerHTML = '';
+  if (currentStudyMode) { grid.style.display = 'none'; return; }
+  grid.style.display = '';
+
+  const dynastyCounts = {};
+  poems.forEach(p => {
+    dynastyCounts[p.dynasty] = (dynastyCounts[p.dynasty] || 0) + 1;
+  });
+  statsBar.innerHTML = `
+    <span>📚 共 ${poems.length} 首</span>
+    ${Object.entries(dynastyCounts).map(([d,c]) => `<span>${d} ${c}首</span>`).join('')}
+  `;
+
+  poems.forEach((poem, idx) => {
+    const card = document.createElement('div');
+    card.className = 'poem-card';
+    card.style.animationDelay = `${Math.min(idx * 0.03, 0.3)}s`;
+    card.innerHTML = `
+      <div class="card-art"><canvas></canvas></div>
+      <span class="dynasty-tag">${poem.dynasty}</span>
+      <div class="card-body">
+        <div class="card-title">${poem.title}</div>
+        <div class="card-meta">${poem.author}</div>
+        <div class="card-preview">${poem.content.split(/[/／]/)[0].substring(0, 40)}…</div>
+      </div>
+    `;
+    card.onclick = () => showDetail(poem);
+    grid.appendChild(card);
+
+    const canvas = card.querySelector('canvas');
+    setTimeout(() => {
+      drawScene(canvas, poem.title, poem.content, false);
+      let running = true;
+      function animLoop() {
+        if (!running) return;
+        drawScene(canvas, poem.title, poem.content, false);
+        requestAnimationFrame(animLoop);
+      }
+      animLoop();
+      stopAnimations.push(() => { running = false; });
+    }, 50);
+  });
+}
+
+// === DETAIL VIEW ===
+function showDetail(poem, skipHash) {
+  stopAnimations.forEach(fn => fn());
+  stopAnimations = [];
+  if (!skipHash) window.location.hash = 'poem/' + poem.id;
+  grid.classList.add('hidden');
+  detailView.classList.add('active');
+  window.scrollTo(0, 0);
+
+  const lines = poem.content.split(/[。，！？、；\n]/g).filter(l => l.trim());
+  const pinyinLines = lines.map(line => {
+    const py = PINYIN[line];
+    if (py) return py;
+    return line.split('').map(ch => PINYIN[ch] || ch).join(' ');
+  });
+
+  const explanations = generateExplanation(poem);
+  const authorBio = getAuthorBio(poem.author);
+
+  // Prev/Next
+  const allPoems = currentFilter === 'all' ? POEMS : POEMS.filter(p => p.dynasty === poem.dynasty);
+  const poemIdx = allPoems.findIndex(p => p.id === poem.id);
+  const prevPoem = poemIdx > 0 ? allPoems[poemIdx - 1] : null;
+  const nextPoem = poemIdx < allPoems.length - 1 ? allPoems[poemIdx + 1] : null;
+
+  const isCollected = (JSON.parse(localStorage.getItem('collectedPoems') || '[]')).includes(poem.id);
+
+  detailView.innerHTML = `
+    <div style="position:relative">
+      <button class="back-btn" onclick="goBack()">← 返回列表</button>
+      <button class="share-btn" onclick="sharePoem(${poem.id})">🔗 复制链接</button>
+    </div>
+    <div class="detail-header">
+      <span class="dynasty-badge">${poem.dynasty} · ${poem.author}</span>
+      <h2>${poem.title}</h2>
+    </div>
+    <div class="scene-container"><canvas id="sceneCanvas"></canvas></div>
+    <div class="audio-controls">
+      <button class="audio-btn" onclick="speakAll(this)">
+        <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.5 4.5 0 002.5-3.5zM14 3.23v2.06a6.5 6.5 0 010 13.42v2.06A8.5 8.5 0 0014 3.23z"/></svg>
+        全诗朗读
+      </button>
+      <button class="audio-btn" onclick="speakLineByLine(this)">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        逐句跟读
+      </button>
+      <button class="audio-btn" onclick="togglePinyin(this)">
+        <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12m-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+        拼音
+      </button>
+      <button class="audio-btn ${isCollected ? 'playing' : ''}" id="collectBtn" onclick="collectPoem(${poem.id}, this)">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        收藏
+      </button>
+    </div>
+    <div class="poem-text-box" id="poemTextBox">
+      ${lines.map((line, i) => `
+        <div class="poem-line" data-idx="${i}">
+          <div class="pinyin" data-pinyin="${pinyinLines[i]}">${pinyinLines[i]}</div>
+          <div class="chinese" onclick="speakLine('${line.replace(/'/g, "\\'")}')">${line}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="explanation">
+      <h3>📝 逐句赏析</h3>
+      ${explanations.filter(e => e.orig).map(exp => `
+        <div class="line-exp">
+          <div class="orig">${exp.orig}</div>
+          <div class="trans">${exp.trans}</div>
+        </div>
+      `).join('')}
+      ${explanations.summary ? `<div class="summary">${explanations.summary}</div>` : ''}
+    </div>
+    <div class="author-info">
+      <h3>👤 ${poem.author}</h3>
+      <p>${authorBio}</p>
+    </div>
+    <div class="poem-nav">
+      <a class="poem-nav-btn ${prevPoem ? '' : 'disabled'}" onclick="${prevPoem ? `showDetail(POEMS.find(p=>p.id===${prevPoem.id}))` : ''}">
+        ← ${prevPoem ? prevPoem.title : '无'}
+      </a>
+      <a class="poem-nav-btn ${nextPoem ? '' : 'disabled'}" onclick="${nextPoem ? `showDetail(POEMS.find(p=>p.id===${nextPoem.id}))` : ''}">
+        ${nextPoem ? nextPoem.title : '无'} →
+      </a>
+    </div>
+  `;
+
+  // Animate scene
+  const sceneCanvas = document.getElementById('sceneCanvas');
+  setTimeout(() => {
+    const stop = animateScene(sceneCanvas, poem.title, poem.content);
+    stopAnimations.push(stop);
+  }, 100);
+}
+
+function sharePoem(id) {
+  const url = window.location.origin + window.location.pathname + '#poem/' + id;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.querySelector('.share-btn');
+    if (btn) { btn.textContent = '✓ 已复制'; setTimeout(() => btn.textContent = '🔗 复制链接', 1500); }
+  });
+}
+
+function collectPoem(id, btn) {
+  const collected = JSON.parse(localStorage.getItem('collectedPoems') || '[]');
+  const idx = collected.indexOf(id);
+  if (idx >= 0) {
+    collected.splice(idx, 1);
+    if (btn) btn.classList.remove('playing');
+  } else {
+    collected.push(id);
+    if (btn) btn.classList.add('playing');
+  }
+  localStorage.setItem('collectedPoems', JSON.stringify(collected));
+}
+
+function goBack() {
+  stopAnimations.forEach(fn => fn());
+  stopAnimations = [];
+  window.location.hash = '';
+  detailView.classList.remove('active');
+  detailView.innerHTML = '';
+  grid.classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+// === EXPLANATIONS ===
+const EXPLANATIONS_DB = {
+  "江南": [
+    {orig:"江南可采莲，莲叶何田田。",trans:"江南水乡正是采莲的好时节，莲叶长得多么茂盛繁密啊。"},
+    {orig:"鱼戏莲叶间。",trans:"鱼儿在莲叶之间欢快地嬉戏。"},
+    {orig:"鱼戏莲叶东，鱼戏莲叶西，鱼戏莲叶南，鱼戏莲叶北。",trans:"鱼儿一会儿游到莲叶东边，一会儿游到西边，一会儿游到南边，一会儿游到北边。用东西南北四个方位，写出了鱼儿自由自在、到处嬉戏的活泼场面。"}
+  ],
+  "长歌行": [
+    {orig:"青青园中葵，朝露待日晞。",trans:"园子里绿油油的葵菜，叶子上的朝露等待着太阳出来把它晒干。"},
+    {orig:"阳春布德泽，万物生光辉。",trans:"温暖的春天把恩泽洒向大地，万物都焕发出勃勃生机。"},
+    {orig:"常恐秋节至，焜黄华叶衰。",trans:"常常担心秋天到来，花和叶就会枯黄凋零。"},
+    {orig:"百川东到海，何时复西归？",trans:"无数条江河向东流到大海，什么时候才能再向西流回来呢？"},
+    {orig:"少壮不努力，老大徒伤悲。",trans:"年轻力壮时不努力奋斗，到老了只能白白地悲伤叹息。这是千古名句，告诫人们要珍惜时光。"}
+  ],
+  "咏鹅": [
+    {orig:"鹅鹅鹅，曲项向天歌。",trans:"鹅啊鹅，弯着脖子朝天高歌。"},
+    {orig:"白毛浮绿水，红掌拨清波。",trans:"白色的羽毛浮在碧绿的水面上，红红的脚掌拨动着清清的水波。色彩鲜明，画面生动。"}
+  ],
+  "风": [
+    {orig:"解落三秋叶，能开二月花。",trans:"风能吹落秋天的树叶，也能吹开春天的花朵。"},
+    {orig:"过江千尺浪，入竹万竿斜。",trans:"风经过江面能掀起千尺巨浪，吹入竹林能让万竿竹子倾斜。全诗不见「风」字，却处处写风。"}
+  ],
+  "咏柳": [
+    {orig:"碧玉妆成一树高，万条垂下绿丝绦。",trans:"高高的柳树像用碧玉装扮成的，千万条柳枝像绿色的丝带垂下来。"},
+    {orig:"不知细叶谁裁出，二月春风似剪刀。",trans:"不知道这细细的柳叶是谁裁剪出来的？原来是二月的春风，它就像一把神奇的剪刀。比喻精妙。"}
+  ],
+  "回乡偶书": [
+    {orig:"少小离家老大回，乡音无改鬓毛衰。",trans:"年轻时离开家乡，年老了才回来。口音没变，但两鬓的头发已经白了。"},
+    {orig:"儿童相见不相识，笑问客从何处来。",trans:"小孩子们见到我都不认识，笑着问我：「这位客人是从哪里来的呀？」充满感慨。"}
+  ],
+  "登鹳雀楼": [
+    {orig:"白日依山尽，黄河入海流。",trans:"太阳沿着山慢慢落下去，黄河朝着大海奔流而去。"},
+    {orig:"欲穷千里目，更上一层楼。",trans:"要想看到更远的地方，就要再登上一层楼。比喻站得高才能看得远，是千古传诵的名句。"}
+  ],
+  "春晓": [
+    {orig:"春眠不觉晓，处处闻啼鸟。",trans:"春天的睡眠真舒服，不知不觉天就亮了，到处都能听到鸟儿的叫声。"},
+    {orig:"夜来风雨声，花落知多少。",trans:"昨夜里刮风下雨的声音，不知道花被打落了多少。惜春之情跃然纸上。"}
+  ],
+  "静夜思": [
+    {orig:"床前明月光，疑是地上霜。",trans:"床前洒满了明亮的月光，好像地上铺了一层白霜。"},
+    {orig:"举头望明月，低头思故乡。",trans:"抬起头望着天上的明月，低下头不由得思念起故乡。简单而深情，是思乡诗的经典。"}
+  ],
+  "望庐山瀑布": [
+    {orig:"日照香炉生紫烟，遥看瀑布挂前川。",trans:"阳光照在香炉峰上升起紫色的烟雾，远远望去瀑布像一匹白绢挂在山前。"},
+    {orig:"飞流直下三千尺，疑是银河落九天。",trans:"水流飞速直泻而下，好像有三千尺那么长，让人怀疑是银河从天上落了下来。夸张手法，气势磅礴。"}
+  ],
+  "早发白帝城": [
+    {orig:"朝辞白帝彩云间，千里江陵一日还。",trans:"清晨告别了彩云缭绕的白帝城，千里之外的江陵一天就到了。"},
+    {orig:"两岸猿声啼不住，轻舟已过万重山。",trans:"两岸猿猴的叫声还没停，轻快的小船已经驶过了万重山峦。写出了行船速度之快和诗人喜悦的心情。"}
+  ],
+  "游子吟": [
+    {orig:"慈母手中线，游子身上衣。",trans:"慈祥的母亲手中拿着针线，为远行的儿子缝制衣裳。"},
+    {orig:"临行密密缝，意恐迟迟归。",trans:"临走前一针一线密密地缝，担心儿子很晚才能回来。"},
+    {orig:"谁言寸草心，报得三春晖。",trans:"谁说小草那一点点孝心，能报答得了春天阳光般伟大的母爱呢？千古颂母名句。"}
+  ],
+  "悯农": [
+    {orig:"锄禾日当午，汗滴禾下土。",trans:"正午烈日下农民在锄地，汗水滴滴落入禾苗下的泥土。"},
+    {orig:"谁知盘中餐，粒粒皆辛苦。",trans:"有谁知道碗里的饭，每一粒都饱含着农民的辛苦啊！"}
+  ],
+  "江雪": [
+    {orig:"千山鸟飞绝，万径人踪灭。",trans:"所有的山上都看不到飞鸟的影子，所有的小路上都没有人的脚印。"},
+    {orig:"孤舟蓑笠翁，独钓寒江雪。",trans:"一条小船上，一位穿着蓑衣戴着斗笠的老翁，独自在寒冷的江面上钓鱼。画面孤寂而壮美。"}
+  ],
+  "清明": [
+    {orig:"清明时节雨纷纷，路上行人欲断魂。",trans:"清明时节细雨纷纷飘洒，路上的行人个个神情黯然、失魂落魄。"},
+    {orig:"借问酒家何处有？牧童遥指杏花村。",trans:"请问哪里有酒家可以歇脚？牧童远远地指着杏花村的方向。"}
+  ],
+  "元日": [
+    {orig:"爆竹声中一岁除，春风送暖入屠苏。",trans:"在噼里啪啦的爆竹声中旧的一年过去了，春风送暖人们喝起了屠苏酒。"},
+    {orig:"千门万户曈曈日，总把新桃换旧符。",trans:"千家万户沐浴在明亮的阳光中，总是用新的桃符换掉旧的。描绘了热闹喜庆的春节景象。"}
+  ],
+  "题西林壁": [
+    {orig:"横看成岭侧成峰，远近高低各不同。",trans:"横着看是连绵的山岭，侧面看是高耸的山峰，从远近高低各处看都不一样。"},
+    {orig:"不识庐山真面目，只缘身在此山中。",trans:"之所以认不清庐山真正的样子，是因为自己就身在庐山之中。蕴含「当局者迷」的哲理。"}
+  ],
+  "示儿": [
+    {orig:"死去元知万事空，但悲不见九州同。",trans:"我本来就知道人死了就什么都没有了，只是为没能看到国家统一而感到悲伤。"},
+    {orig:"王师北定中原日，家祭无忘告乃翁。",trans:"等到朝廷的军队收复中原的那天，祭祀时千万不要忘记告诉你的父亲。临终不忘国事，感人至深。"}
+  ],
+  "己亥杂诗": [
+    {orig:"九州生气恃风雷，万马齐喑究可哀。",trans:"国家要焕发生机需要依靠风雷激荡，万马无声的局面实在令人悲哀。"},
+    {orig:"我劝天公重抖擞，不拘一格降人材。",trans:"我劝老天爷重新振作精神，不拘一格地降下有用的人才。"}
+  ]
+};
+
+function generateExplanation(poem) {
+  if (EXPLANATIONS_DB[poem.title]) {
+    const exps = EXPLANATIONS_DB[poem.title];
+    const summaryText = getSummary(poem);
+    return [...exps, {summary: summaryText}];
+  }
+  const lines = poem.content.split(/[。，！？、；]/g).filter(l => l.trim());
+  const defaultExps = lines.map(line => ({
+    orig: line.trim(),
+    trans: translateLine(line.trim())
+  }));
+  return [...defaultExps, {summary: getSummary(poem)}];
+}
+
+function translateLine(line) {
+  return "（这句诗描绘了优美的意境，值得细细品味。点击朗读按钮听一听，感受古诗的韵律美。）";
+}
+
+function getSummary(poem) {
+  const summaries = {
+    "鹿柴":"这首诗描写了傍晚时分空山深林中的幽静景色，以动衬静，用'人语响'反衬山的空寂，是王维山水诗的代表作。",
+    "九月九日忆山东兄弟":"这首诗写重阳节思念家乡亲人，'每逢佳节倍思亲'成为千古传诵的名句。",
+    "芙蓉楼送辛渐":"这是一首送别诗，诗人以'冰心玉壶'自喻，表达了自己纯洁高尚的品格。",
+    "渭城曲":"这是一首送别诗，'劝君更尽一杯酒'写出了离别时的依依不舍，被誉为送别诗之冠。",
+    "黄鹤楼送孟浩然之广陵":"李白送别好友孟浩然，'烟花三月下扬州'成为千古名句。",
+    "枫桥夜泊":"这首诗描写了旅途中夜泊枫桥的所见所感，'姑苏城外寒山寺，夜半钟声到客船'意境深远。",
+    "滁州西涧":"这首诗描写了滁州西涧的幽静景色，'野渡无人舟自横'是千古名句。",
+    "早春呈水部张十八员外":"韩愈描写早春景色，'天街小雨润如酥'写出了春雨的细腻。",
+    "渔歌子":"张志和描绘了春汛时期西塞山的秀丽风光和渔夫的生活。",
+    "望洞庭":"刘禹锡用精妙的比喻描绘了洞庭湖的壮丽景色。",
+    "浪淘沙":"这首诗以浪漫的想象描绘了黄河的雄伟气势。",
+    "赋得古原草送别":"白居易借野草抒发送别之情，'野火烧不尽，春风吹又生'成为千古名句。",
+    "池上":"白居易用简单的语言描写了一个小孩偷采白莲的可爱场景。",
+    "忆江南":"白居易用简洁的语言描绘了江南的美丽风光，表达了对江南的深切怀念。",
+    "小儿垂钓":"这首诗生动地描写了一个小孩学钓鱼的天真可爱的样子。",
+    "寻隐者不遇":"贾岛通过问答形式，写出了隐者的高洁和山中的幽深。",
+    "山行":"杜牧描写了深秋山中的景色，'霜叶红于二月花'写出了枫叶的美。",
+    "江南春":"杜牧描绘了江南春景的丰富多彩和烟雨朦胧的美感。",
+    "蜂":"罗隐借蜜蜂的辛勤劳动，表达了对劳动者的赞美和对不劳而获者的讽刺。",
+    "江上渔者":"范仲淹描写了渔民在风浪中捕鱼的艰辛，表达了对劳动人民的同情。",
+    "书湖阴先生壁":"王安石用拟人手法描写了田园生活的美好。",
+    "六月二十七日望湖楼醉书":"苏轼生动地描写了西湖暴雨的壮观景象。",
+    "饮湖上初晴后雨":"苏轼用西施比喻西湖，写出了西湖无论晴雨都很美。",
+    "惠崇春江晓景":"苏轼描绘了早春江边的景色，充满了生活气息。",
+    "夏日绝句":"李清照借项羽的典故，表达了刚烈的气节。",
+    "三衢道中":"曾几描写了初夏时节山间行走的乐趣。",
+    "秋夜将晓出篱门迎凉有感":"陆游表达了对北方沦陷区人民的深切同情和对收复失地的渴望。",
+    "四时田园杂兴":"范成大描写了农村四季的劳动生活和自然风光。",
+    "小池":"杨万里用细腻的笔触描写了初夏小池的生机勃勃。",
+    "晓出净慈寺送林子方":"杨万里描写了六月西湖荷花盛开的壮丽景象。",
+    "春日":"朱熹借春游抒发了对读书的感悟。",
+    "观书有感":"朱熹用池塘清如许比喻读书后心境的澄明，'源头活水'比喻不断学习。",
+    "题临安邸":"林升讽刺南宋统治者偏安一隅、不思收复的行径。",
+    "游园不值":"叶绍翁通过写游园不遇，表达了春天的勃勃生机是关不住的。",
+    "乡村四月":"翁卷描写了江南农村四月的繁忙景象和美丽风光。",
+    "墨梅":"王冕借墨梅表达了自己的高尚品格和不向世俗妥协的精神。",
+    "石灰吟":"于谦借石灰表达了自己不怕牺牲、坚守清白的崇高品格。",
+    "竹石":"郑燮借竹子表达了自己坚韧不拔的精神。",
+    "所见":"袁枚生动地描写了一个牧童骑牛唱歌、忽然想捕蝉的有趣场景。",
+    "村居":"高鼎描写了早春二月农村孩子们放风筝的欢乐场景。"
+  };
+  return summaries[poem.title] || `${poem.author}的这首《${poem.title}》是中国古典诗歌中的佳作，值得反复诵读和品味。`;
+}
+
+function getAuthorBio(author) {
+  const bios = {
+    "汉乐府":"汉乐府是汉代朝廷设立的音乐机构，负责采集民间歌谣和文人诗作，后人将这些作品统称为'乐府诗'。",
+    "北朝民歌":"北朝民歌是南北朝时期北方各民族的民间歌谣，风格粗犷豪放，反映了北方游牧民族的生活。",
+    "骆宾王":"骆宾王（约619-687），唐代诗人，与王勃、杨炯、卢照邻合称'初唐四杰'。《咏鹅》是他七岁时所作。",
+    "李峤":"李峤（644-713），唐代诗人，文章宿老，与杜审言等合称'文章四友'。",
+    "贺知章":"贺知章（约659-744），唐代诗人，性旷达，好饮酒，与张若虚、张旭、包融合称'吴中四士'。",
+    "王之涣":"王之涣（688-742），唐代诗人，善于描写边塞风光，其诗'传乎乐章，布在人口'。",
+    "孟浩然":"孟浩然（689-740），唐代诗人，与王维并称'王孟'，是山水田园诗派的代表人物。",
+    "王翰":"王翰（687-726），唐代诗人，性格豪放不羁，其《凉州词》是边塞诗中的名篇。",
+    "王昌龄":"王昌龄（698-757），唐代诗人，有'诗家天子''七绝圣手'之称，擅长写边塞诗和宫怨诗。",
+    "王维":"王维（701-761），唐代诗人、画家，字摩诘，号摩诘居士。苏轼评价他'味摩诘之诗，诗中有画；观摩诘之画，画中有诗'。",
+    "李白":"李白（701-762），唐代诗人，字太白，号青莲居士，被誉为'诗仙'。他的诗豪放飘逸，想象丰富，是唐代最伟大的浪漫主义诗人。",
+    "高适":"高适（704-765），唐代诗人，边塞诗派的代表人物，与岑参并称'高岑'。",
+    "杜甫":"杜甫（712-770），唐代诗人，字子美，自号少陵野老，被誉为'诗圣'。他的诗被称为'诗史'，是唐代最伟大的现实主义诗人。",
+    "张继":"张继（生卒年不详），唐代诗人，《枫桥夜泊》是他的代表作，传诵千古。",
+    "韦应物":"韦应物（737-792），唐代诗人，山水田园诗派代表，世称'韦苏州'。",
+    "孟郊":"孟郊（751-814），唐代诗人，与贾岛并称'郊寒岛瘦'，诗风苦涩。",
+    "韩愈":"韩愈（768-824），唐代文学家、思想家，'唐宋八大家'之首，主张'文以载道'。",
+    "张志和":"张志和（约730-约810），唐代诗人，自号烟波钓徒，擅长写渔隐生活。",
+    "卢纶":"卢纶（约737-799），唐代诗人，'大历十才子'之一，边塞诗气势雄浑。",
+    "刘禹锡":"刘禹锡（772-842），唐代文学家，有'诗豪'之称，诗风豪迈爽朗。",
+    "白居易":"白居易（772-846），唐代诗人，字乐天，号香山居士，主张'文章合为时而著，歌诗合为事而作'。",
+    "胡令能":"胡令能（生卒年不详），唐代诗人，隐居不做官，以修补锅碗为生，人称'胡钉铰'。",
+    "李绅":"李绅（772-846），唐代诗人，'新乐府运动'的参与者，《悯农》诗流传最广。",
+    "柳宗元":"柳宗元（773-819），唐代文学家，'唐宋八大家'之一，与韩愈并称'韩柳'。",
+    "贾岛":"贾岛（779-843），唐代诗人，以苦吟著称，'推敲'典故即出自他。",
+    "杜牧":"杜牧（803-852），唐代诗人，与李商隐并称'小李杜'，诗以七言绝句著称。",
+    "罗隐":"罗隐（833-909），唐代诗人，诗文多讽刺现实，笔锋犀利。",
+    "范仲淹":"范仲淹（989-1052），北宋政治家、文学家，'先天下之忧而忧，后天下之乐而乐'是他的名句。",
+    "王安石":"王安石（1021-1086），北宋政治家、文学家、思想家，'唐宋八大家'之一。",
+    "苏轼":"苏轼（1037-1101），北宋文学家、书画家，号东坡居士，'唐宋八大家'之一，是中国文学史上最全能的天才之一。",
+    "李清照":"李清照（1084-约1155），宋代女词人，号易安居士，被誉为'千古第一才女'。",
+    "曾几":"曾几（1084-1166），南宋诗人，字吉甫，号茶山居士。",
+    "陆游":"陆游（1125-1210），南宋诗人，字务观，号放翁，是中国文学史上存诗最多的诗人，一生力主抗金。",
+    "范成大":"范成大（1126-1193），南宋诗人，与杨万里、陆游、尤袤合称'南宋四大家'。",
+    "杨万里":"杨万里（1127-1206），南宋诗人，号诚斋，诗风清新自然，被称为'诚斋体'。",
+    "朱熹":"朱熹（1130-1200），南宋理学家、教育家、诗人，理学集大成者。",
+    "林升":"林升（生卒年不详），南宋诗人，以《题临安邸》闻名。",
+    "叶绍翁":"叶绍翁（生卒年不详），南宋诗人，字嗣宗，号靖逸。",
+    "翁卷":"翁卷（生卒年不详），南宋诗人，字灵舒，'永嘉四灵'之一。",
+    "王冕":"王冕（1310-1359），元代画家、诗人，擅长画梅，性格孤傲。",
+    "于谦":"于谦（1398-1457），明代政治家、军事家、诗人，土木堡之变后力挽狂澜，保卫北京。",
+    "郑燮":"郑燮（1693-1765），清代书画家、文学家，号板桥，'扬州八怪'之一，以画竹著称。",
+    "袁枚":"袁枚（1716-1798），清代诗人、散文家，号简斋，主张'性灵说'。",
+    "高鼎":"高鼎（生卒年不详），清代诗人，字象一，号拙吾。",
+    "龚自珍":"龚自珍（1792-1841），清代思想家、文学家，主张改革，是近代启蒙思想的先驱。"
+  };
+  return bios[author] || `${author}是中国古代的一位诗人。`;
+}
+
+// === AUDIO ===
+let currentUtterance = null;
+let lineByLineMode = false;
+let lineByLineIdx = 0;
+
+function speak(text, rate, onEnd) {
+  if (currentUtterance) speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = rate || 0.8;
+  u.pitch = 1.05;
+  u.volume = 1;
+  // Try to find a natural Chinese voice
+  const voices = speechSynthesis.getVoices();
+  const preferred = ['Ting-Ting','Mei-Jia','Zhiyu','Xiaoxiao','Yunxi','Kangkang','Haoyu'];
+  let zhVoice = null;
+  for (const name of preferred) {
+    zhVoice = voices.find(v => v.name.includes(name));
+    if (zhVoice) break;
+  }
+  if (!zhVoice) zhVoice = voices.find(v => v.lang.startsWith('zh'));
+  if (zhVoice) u.voice = zhVoice;
+  u.onend = onEnd || null;
+  currentUtterance = u;
+  speechSynthesis.speak(u);
+}
+
+function speakAll(btn) {
+  btn.classList.toggle('playing');
+  if (btn.classList.contains('playing')) {
+    const text = document.querySelectorAll('.poem-line .chinese').length > 0
+      ? Array.from(document.querySelectorAll('.poem-line .chinese')).map(el => el.textContent).join('，')
+      : '';
+    speak(text, 0.75, () => btn.classList.remove('playing'));
+  } else {
+    speechSynthesis.cancel();
+  }
+}
+
+function speakLineByLine(btn) {
+  btn.classList.toggle('playing');
+  if (btn.classList.contains('playing')) {
+    const lines = document.querySelectorAll('.poem-line');
+    let idx = 0;
+    function next() {
+      if (idx >= lines.length || !btn.classList.contains('playing')) {
+        btn.classList.remove('playing');
+        lines.forEach(l => l.querySelector('.chinese').classList.remove('highlight'));
+        return;
+      }
+      lines.forEach(l => l.querySelector('.chinese').classList.remove('highlight'));
+      lines[idx].querySelector('.chinese').classList.add('highlight');
+      speak(lines[idx].querySelector('.chinese').textContent, 0.7, () => {
+        idx++;
+        setTimeout(next, 500);
+      });
+    }
+    next();
+  } else {
+    speechSynthesis.cancel();
+  }
+}
+
+function speakLine(text) {
+  speak(text, 0.8);
+}
+
+function togglePinyin(btn) {
+  const pinyins = document.querySelectorAll('.poem-line .pinyin');
+  const isHidden = pinyins[0]?.style.display === 'none';
+  pinyins.forEach(el => el.style.display = isHidden ? '' : 'none');
+  btn.classList.toggle('active', isHidden);
+}
+
+// === SEARCH & FILTER ===
+searchInput.addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  if (currentStudyMode) return;
+  const filtered = POEMS.filter(p => {
+    if (currentFilter !== 'all' && p.dynasty !== currentFilter) return false;
+    if (!q) return true;
+    return p.title.toLowerCase().includes(q) ||
+           p.author.toLowerCase().includes(q) ||
+           p.content.toLowerCase().includes(q);
+  });
+  renderCards(filtered);
+});
+
+// Nav buttons
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.filter;
+    currentStudyMode = false;
+    currentFilter = filter;
+    const filtered = filter === 'all' ? POEMS : POEMS.filter(p => p.dynasty === filter);
+    const q = searchInput.value.toLowerCase().trim();
+    const results = q ? filtered.filter(p =>
+      p.title.toLowerCase().includes(q) ||
+      p.author.toLowerCase().includes(q) ||
+      p.content.toLowerCase().includes(q)
+    ) : filtered;
+    grid.classList.remove('hidden');
+    detailView.classList.remove('active');
+    renderCards(results);
+  });
+});
+
+// === SCROLL TO TOP ===
+const scrollTopBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+});
+scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// === INIT ===
+// Ensure voices are loaded
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = () => {};
+}
+
+// Hash routing: support direct link to a poem
+function handleHash() {
+  const hash = window.location.hash;
+  const match = hash.match(/^#poem\/(\d+)$/);
+  if (match) {
+    const poemId = parseInt(match[1]);
+    const poem = POEMS.find(p => p.id === poemId);
+    if (poem) {
+      showDetail(poem, true);
+      return;
+    }
+  }
+  // Default: show list
+  renderCards(POEMS);
+}
+
+window.addEventListener('hashchange', handleHash);
+
+// Initial render
+if (window.location.hash) {
+  handleHash();
+} else {
+  renderCards(POEMS);
+}
+</script>
+</body>
+</html>
