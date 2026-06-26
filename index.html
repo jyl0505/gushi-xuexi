@@ -17,11 +17,18 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-height:100vh;overflow-x:hidden}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(184,134,11,.10),transparent 28%),
+    radial-gradient(circle at 88% 18%,rgba(45,106,79,.10),transparent 26%),
+    linear-gradient(180deg,#fffaf3 0%,var(--paper) 42%,#f3efe6 100%)
+}
 
 /* === HEADER === */
 .site-header{
   background:linear-gradient(135deg,#1a0f0a 0%,#2c1810 50%,#3d2317 100%);
-  color:var(--paper);padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden
+  color:var(--paper);padding:2.6rem 1.5rem 2.2rem;text-align:center;position:relative;overflow:hidden
 }
 .site-header::before{
   content:'';position:absolute;inset:0;
@@ -30,6 +37,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-h
 }
 .site-header h1{font-family:var(--font-title);font-size:2.8rem;letter-spacing:.15em;position:relative}
 .site-header .subtitle{font-size:1rem;opacity:.7;margin-top:.5rem;letter-spacing:.3em;position:relative}
+.site-header .hero-note{
+  position:relative;margin:.9rem auto 0;max-width:640px;font-size:.92rem;line-height:1.8;
+  color:rgba(250,246,240,.82);letter-spacing:.05em
+}
 
 /* === NAV TABS === */
 .nav-bar{
@@ -61,7 +72,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-h
   display:flex;justify-content:center;gap:2rem;padding:.8rem 1rem;
   font-size:.85rem;color:var(--accent2);flex-wrap:wrap
 }
-.stats-bar span{display:flex;align-items:center;gap:.3rem}
+.stats-bar span{
+  display:flex;align-items:center;gap:.3rem;background:rgba(255,255,255,.62);
+  border:1px solid rgba(212,197,169,.7);padding:.35rem .7rem;border-radius:999px
+}
 
 /* === POEM GRID === */
 .poem-grid{
@@ -69,7 +83,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-h
   gap:1.2rem;padding:1.5rem;max-width:1200px;margin:0 auto
 }
 .poem-card{
-  background:#fff;border-radius:1rem;overflow:hidden;cursor:pointer;
+  background:rgba(255,255,255,.92);border-radius:1rem;overflow:hidden;cursor:pointer;
   box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s;
   position:relative;border:1px solid rgba(0,0,0,.05)
 }
@@ -87,6 +101,13 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-h
 .poem-card .card-preview{
   font-size:.85rem;color:#666;line-height:1.6;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+.card-study-row{
+  display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.8rem
+}
+.mini-tag{
+  font-size:.72rem;color:var(--accent2);background:var(--cloud);
+  border:1px solid rgba(212,197,169,.75);border-radius:999px;padding:.18rem .55rem
 }
 .poem-card .dynasty-tag{
   position:absolute;top:.6rem;right:.6rem;
@@ -226,6 +247,33 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-h
 }
 .author-info p{font-size:.9rem;line-height:1.8;color:#555}
 
+/* Learning links */
+.learning-panel{
+  background:#fff;border-radius:1rem;padding:1.5rem 2rem;
+  box-shadow:var(--shadow);margin-bottom:1.5rem
+}
+.learning-panel h3{
+  font-family:var(--font-title);font-size:1.3rem;color:var(--accent2);margin-bottom:1rem
+}
+.learning-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.learning-box{
+  background:var(--cloud);border:1px solid rgba(212,197,169,.7);
+  border-radius:.8rem;padding:1rem
+}
+.learning-box h4{font-size:.95rem;color:var(--jade);margin-bottom:.65rem}
+.keyword-list,.related-list{display:flex;gap:.5rem;flex-wrap:wrap}
+.keyword-list span{
+  background:#fff;border:1px solid var(--mist);border-radius:999px;
+  padding:.25rem .65rem;font-size:.82rem;color:var(--ink)
+}
+.related-card{
+  border:1px solid rgba(212,197,169,.9);background:#fff;border-radius:.65rem;
+  padding:.55rem .7rem;cursor:pointer;color:var(--ink);font-family:var(--font-body);
+  font-size:.85rem;text-align:left;transition:all .2s
+}
+.related-card:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.study-tip{font-size:.9rem;line-height:1.7;color:#555}
+
 /* Study mode */
 .study-section{
   background:linear-gradient(135deg,var(--jade),#1b4332);
@@ -271,6 +319,8 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-h
   .poem-line .chinese{font-size:1.4rem}
   .detail-header h2{font-size:1.8rem}
   .scene-container{height:200px}
+  .learning-grid{grid-template-columns:1fr}
+  .learning-panel,.explanation,.author-info{padding:1.2rem}
 }
 
 /* Animations */
@@ -297,6 +347,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);min-h
 <header class="site-header">
   <h1>诗词学堂</h1>
   <div class="subtitle">小学1-6年级必备古诗75首</div>
+  <div class="hero-note">按朝代、主题和诗意场景学习，先读会，再理解，最后用关联诗词巩固记忆。</div>
 </header>
 
 <nav class="nav-bar">
@@ -1528,6 +1579,8 @@ function renderCards(poems) {
   `;
 
   poems.forEach((poem, idx) => {
+    const scene = getSceneLabel(poem);
+    const keywords = getLearningKeywords(poem).slice(0, 2);
     const card = document.createElement('div');
     card.className = 'poem-card';
     card.style.animationDelay = `${Math.min(idx * 0.03, 0.3)}s`;
@@ -1538,6 +1591,10 @@ function renderCards(poems) {
         <div class="card-title">${poem.title}</div>
         <div class="card-meta">${poem.author}</div>
         <div class="card-preview">${poem.content.split(/[/／]/)[0].substring(0, 40)}…</div>
+        <div class="card-study-row">
+          <span class="mini-tag">${scene}</span>
+          ${keywords.map(k => `<span class="mini-tag">${k}</span>`).join('')}
+        </div>
       </div>
     `;
     card.onclick = () => showDetail(poem);
@@ -1546,14 +1603,6 @@ function renderCards(poems) {
     const canvas = card.querySelector('canvas');
     setTimeout(() => {
       drawScene(canvas, poem.title, poem.content, false);
-      let running = true;
-      function animLoop() {
-        if (!running) return;
-        drawScene(canvas, poem.title, poem.content, false);
-        requestAnimationFrame(animLoop);
-      }
-      animLoop();
-      stopAnimations.push(() => { running = false; });
     }, 50);
   });
 }
@@ -1576,6 +1625,9 @@ function showDetail(poem, skipHash) {
 
   const explanations = generateExplanation(poem);
   const authorBio = getAuthorBio(poem.author);
+  const keywords = getLearningKeywords(poem);
+  const relatedPoems = getRelatedPoems(poem);
+  const studyTip = getStudyTip(poem);
 
   // Prev/Next
   const allPoems = currentFilter === 'all' ? POEMS : POEMS.filter(p => p.dynasty === poem.dynasty);
@@ -1635,6 +1687,29 @@ function showDetail(poem, skipHash) {
       <h3>👤 ${poem.author}</h3>
       <p>${authorBio}</p>
     </div>
+    <div class="learning-panel">
+      <h3>🔎 关联学习</h3>
+      <div class="learning-grid">
+        <div class="learning-box">
+          <h4>关键词</h4>
+          <div class="keyword-list">${keywords.map(k => `<span>${k}</span>`).join('')}</div>
+        </div>
+        <div class="learning-box">
+          <h4>背诵提示</h4>
+          <div class="study-tip">${studyTip}</div>
+        </div>
+        <div class="learning-box" style="grid-column:1/-1">
+          <h4>继续学这几首</h4>
+          <div class="related-list">
+            ${relatedPoems.map(p => `
+              <button class="related-card" onclick="showDetail(POEMS.find(item=>item.id===${p.id}))">
+                《${p.title}》 · ${p.author}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="poem-nav">
       <a class="poem-nav-btn ${prevPoem ? '' : 'disabled'}" onclick="${prevPoem ? `showDetail(POEMS.find(p=>p.id===${prevPoem.id}))` : ''}">
         ← ${prevPoem ? prevPoem.title : '无'}
@@ -1682,6 +1757,69 @@ function goBack() {
   detailView.innerHTML = '';
   grid.classList.remove('hidden');
   window.scrollTo(0, 0);
+}
+
+function getSceneLabel(poem) {
+  const labels = {
+    goose:'动物童趣', lotus:'荷塘江南', waterfall:'山水瀑布', autumn_maple:'秋景枫叶',
+    winter_river:'寒江雪景', rain_village:'节令风俗', tower:'登高望远', willow:'春柳',
+    grassland:'草原风光', moon_night:'明月思乡', bamboo:'托物言志', spring_morning:'春日清晨',
+    yellow_river:'黄河气象', west_lake:'西湖风光', mountain_mist:'山岳哲理', village:'田园生活',
+    frontier:'边塞征战', farewell:'送别思念', river_sail:'江河行旅', mother_sewing:'亲情',
+    winter_plum:'寒冬品格', spring:'春景', summer:'夏景', autumn:'秋景', mountain:'山景',
+    water:'水景', default:'诗意画面'
+  };
+  return labels[detectScene(poem.title, poem.content)] || labels.default;
+}
+
+function getLearningKeywords(poem) {
+  const text = poem.title + poem.content + poem.author;
+  const keywords = [];
+  const rules = [
+    [/月|故乡|异乡|思亲|回乡/, '思乡'],
+    [/送|别|故人|客|归/, '送别'],
+    [/春|柳|花|燕|莺|草/, '春景'],
+    [/夏|荷|莲|蝉|小池/, '夏景'],
+    [/秋|霜|枫|菊/, '秋景'],
+    [/雪|寒|冰|梅/, '冬景'],
+    [/山|峰|岭|庐山|岳/, '山水'],
+    [/江|河|湖|海|泉|溪|潭|波/, '江河'],
+    [/农|禾|田|村|牧童|儿童|小娃/, '生活'],
+    [/边|塞|凉州|关|弓刀|征战/, '边塞'],
+    [/母|游子/, '亲情'],
+    [/竹|石|梅|清白|坚劲|人杰/, '品格'],
+    [/更上一层楼|不识庐山|源头活水|不拘一格/, '哲理']
+  ];
+  rules.forEach(([re, label]) => { if (re.test(text) && !keywords.includes(label)) keywords.push(label); });
+  if (!keywords.includes(poem.dynasty)) keywords.push(poem.dynasty);
+  return keywords.slice(0, 5);
+}
+
+function getRelatedPoems(poem) {
+  const scene = detectScene(poem.title, poem.content);
+  const keywords = getLearningKeywords(poem);
+  return POEMS
+    .filter(p => p.id !== poem.id)
+    .map(p => {
+      const pKeywords = getLearningKeywords(p);
+      let score = 0;
+      if (p.author === poem.author) score += 4;
+      if (p.dynasty === poem.dynasty) score += 1;
+      if (detectScene(p.title, p.content) === scene) score += 3;
+      keywords.forEach(k => { if (pKeywords.includes(k)) score += 2; });
+      return { poem: p, score };
+    })
+    .filter(item => item.score > 1)
+    .sort((a, b) => b.score - a.score || a.poem.id - b.poem.id)
+    .slice(0, 4)
+    .map(item => item.poem);
+}
+
+function getStudyTip(poem) {
+  const scene = getSceneLabel(poem);
+  const lines = poem.content.split(/[。，！？、；\n]/g).filter(l => l.trim()).length;
+  const firstLine = poem.content.split(/[。，！？、；\n]/g).filter(l => l.trim())[0] || poem.title;
+  return `先抓住「${scene}」这个画面，再从「${firstLine}」开始分 ${lines} 句背诵；背完后点下面关联诗，比较同主题写法。`;
 }
 
 // === EXPLANATIONS ===
